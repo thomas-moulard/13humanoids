@@ -1,0 +1,217 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+
+\title{\LARGE \bf
+Optimization-based Motion Retargeting Integrating Spatial and Dynamic Constraints
+}
+
+
+\author{Thomas Moulard$^{1}$, Eiichi Yoshida$^{1}$ and Shin'ichiro
+  Nakaoka$^{2}$% <-this % stops a space
+\thanks{*This work was not supported by any organization}% <-this % stops a space
+\thanks{$^{1}$T.~Moulard and E.~Yoshida are with CNRS-AIST JRL (Joint
+  Robotics Laboratory), UMI3218/CRT, and $^{1}$S.~Nakaoka are with
+  Humanoid Research Group, both National Institute of Advanced Industrial Science and Technology (AIST)
+Tsukuba Central 2, 1-1-1 Umezono, Ibaraki 305-8568 Japan
+        {\tt\footnotesize \{thomas.moulard, e.yoshida, s.nakaoka\}@aist.go.jp}}%
+}
+
+
+\begin{document}
+
+
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+This is the abstract.
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+\label{sec:intro}
+
+One of the advantages of human-size humanoid robots is
+its ability of generation whole-body motions maintaining similar
+dynamics to humans. 
+This ability allows a humanoid robot to serve as an entertainer like
+a dancer of an actor \cite{nakaoka_iros2010}, or also to use various
+machines and devices designed for humans \cite{Yokoi03iros}.
+As an extension of latter use, a new application
+has recently been studied: a humanoid robot as an evaluator of human
+assistive devices \cite{Takanishi06ICRA,Miura13ICRA}.
+If a humanoid reproduces human motions faithfully, it can be used to
+test the devices instead of human subjects. 
+This brings several beneftits such as no need for ethical 
+process, repeated test with exactly the same motions under the same
+conditions, and qualtitative evaluation through sensory measurement
+like torque and force.
+It has been demonstrated that the human-size humanoid HRP-4C
+\cite{Kaneko09Humanoids}  can evaluate the effect of load reduction
+quantitatively by estimating motor torque \cite{Miura13ICRA}, taking
+an example of a supportive wear called ``Smart Suit Lite''
+\cite{Tanaka11JRM} designed to reduce load 
+at lower back with embedded elastic bands. 
+
+The important issue in those applications is how to generate natural
+motions of a humanoid robot. 
+There have been a number of studies on ``motion retargeting''
+techniques in order to
+generate humanoid motions based on those of a human measured by a
+motion capture system.
+Regargeting captured motion to humanoids has been
+actively studied during last decade, thanks to the progress of their
+dynamic capability. The work of Pollard \cite{Pollard02ICRA} is one of
+the pioneering research that enables conversion from whole-body motion
+to a humanoid taking into account various constraints, in this case
+the upper body of Sarcos humanoid robot.
+Nakaoka et al. developed a technique to  transfer
+Japanese traditional dancing motions  to a humanoid by introducing a
+notion of leg task model \cite{nakaoka_icra2004,nakaoka_2007}.
+Miura et al. \cite{Miura11IROS} devised a walking pattern generator
+that allows the humanoid robot HRP-4C to walk in a manner very close
+to humans, including stretched knees, swing-leg trajectory and single
+support phase on the toe.
+Other imitation methods have been proposed based on a dynamic
+controller  \cite{Yamane11humanoids,Ramos11humanoids}, 
+motion recognition and primitives \cite{Ott08humanoids} and
+extraction of upper-body motion from markerless motion input
+\cite{Dariush08IROS,Do08humanoids}. 
+
+
+
+% Human motion based optimization
+% Categoraized related work
+% Takano
+% \begin{itemize}
+% \item Pollard (upper body), Dariush, Lee, Kulic, Yamane, Miura, Mansard
+%   (walking) Martin Do-KIT
+% 
+% \item Manocha, Kallman: support for humanoid animation -- graphic only
+% \item Nakaoka humanoids 2012 -- graphic + robot
+% \item Motion optimization Miossec, Suleiman, Lengagne
+% \end{itemize}
+
+
+Motion retargeting has been investigated in computer
+graphics domain, typically to generate motions for new characters
+based on motion capture data using space-time constraints solver
+\cite{Gleicher98}.  
+Recently, Ho et al. proposed a new regargeting method called
+``Interaction Mesh'' 
+that preserves spatial relationship between closely interacting body
+parts and the objects in the environments \cite{Komura10}.
+Nakaoka and Komura extended this method for regargeting to a humanoid
+robot by taking advantage of its capacity to adapt motions
+to a character with very different physical properties
+\cite{Nakaoka12Humanoids}. Usage of Interaction Mesh brings natural
+following of original human motion and self-collision avoidance.
+Although this method includes
+balance consideration by shifting the waist,  it does not deal with 
+dynamic constraints such as torque limits or dynamic ZMP-based stability.
+
+
+% Optim
+On the other hand, optimization techniques are more and more used to
+generate robot trajectories minimizing certain cost function under
+mechanical or dynamic constraints.
+Miossec et al. applied nonliner optimization dynamic whole-body motion
+like a kicking motion of a human-size humanoid \cite{Miossec06ROBIO}.
+Recently the optimization is utilized for generation of multi-contact
+dynamic motion through modeling of dynamic constraints using Taylor
+expansion \cite{Lengagne13IJRR}.
+Suleiman et al. proposed another trajectory optimization technique
+based on Lie 
+algebra that allows efficient computation through analytic integration
+of dynamics \cite{Suleiman07Humanoids} and applied it to human motion
+imitation \cite{Suleiman08ICRA}. 
+The latter research aims at optimzing the humanoid trajectory to be as
+close as human motion, but self-collision avoidance is incorpolated as
+a post-processing to the optimized motion. This is disadvantageous
+because separate application of collision avoidance may lead to
+unnatural motion. 
+
+
+% Motivation and contributions
+% Problem: dynamic constraints not well considered
+% To our knowledge, there has been no motion optimization integrating
+% motion retargeting and self-collision or interaction with
+% environment at the same time.
+Previous research is therefore still lacking 
+motion optimization capacity taking into account
+motion retargeting, dynamics constraints and
+self-collision or interaction with enviroment at the same time, in
+order to create the humanoid motion as close as human motions.
+In this paper, we address this retargeting problem by formulating it
+as a nonlinear optimization problem, taking into account spatial and
+dynamic constraints.
+Our contributions are...
+The paper is organized as follows...
+
+\section{Method Overview}
+\label{sec:overview}
+
+
+\section{Conclusions}
+
+This is conclusion.
+
+% \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Appendix}
+
+Appendixes should appear before the acknowledgment.
+
+\section*{Acknowledgment}
+
+JSPS Fellowship
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{yoshida-main,yoshida-ca,humanoid,assist,graphics,jrl}
+
+
+\end{document}
