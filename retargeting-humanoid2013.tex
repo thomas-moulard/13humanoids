@@ -69,9 +69,9 @@ has recently been studied: a humanoid robot as an evaluator of human
 assistive devices \cite{Takanishi06ICRA,Miura13ICRA}.
 If a humanoid reproduces human motions faithfully, it can be used to
 test the devices instead of human subjects. 
-This brings several beneftits such as no need for ethical 
+This brings several benefits such as no need for ethical 
 process, repeated test with exactly the same motions under the same
-conditions, and qualtitative evaluation through sensory measurement
+conditions, and qualitative evaluation through sensory measurement
 like torque and force.
 It has been demonstrated that the human-size humanoid HRP-4C
 \cite{Kaneko09Humanoids}  can evaluate the effect of load reduction
@@ -124,11 +124,11 @@ Motion retargeting has been investigated in computer
 graphics domain, typically to generate motions for new characters
 based on motion capture data using space-time constraints solver
 \cite{Gleicher98}.  
-Recently, Ho et al. proposed a new regargeting method called
+Recently, Ho et al. proposed a new retargeting method called
 ``Interaction Mesh'' 
 that preserves spatial relationship between closely interacting body
 parts and the objects in the environments \cite{Komura10}.
-Nakaoka and Komura extended this method for regargeting to a humanoid
+Nakaoka and Kokura extended this method for retargeting to a humanoid
 robot by taking advantage of its capacity to adapt motions
 to a character with very different physical properties
 \cite{Nakaoka12Humanoids}. Usage of Interaction Mesh brings natural
@@ -142,7 +142,7 @@ dynamic constraints such as torque limits or dynamic ZMP-based stability.
 On the other hand, optimization techniques are more and more used to
 generate robot trajectories minimizing certain cost function under
 mechanical or dynamic constraints.
-Miossec et al. applied nonliner optimization dynamic whole-body motion
+Miossec et al. applied nonlinear optimization dynamic whole-body motion
 like a kicking motion of a human-size humanoid \cite{Miossec06ROBIO}.
 Recently the optimization is utilized for generation of multi-contact
 dynamic motion through modeling of dynamic constraints using Taylor
@@ -152,8 +152,8 @@ based on Lie
 algebra that allows efficient computation through analytic integration
 of dynamics \cite{Suleiman07Humanoids} and applied it to human motion
 imitation \cite{Suleiman08ICRA}. 
-The latter research aims at optimzing the humanoid trajectory to be as
-close as human motion, but self-collision avoidance is incorpolated as
+The latter research aims at optimizing the humanoid trajectory to be as
+close as human motion, but self-collision avoidance is incorporated as
 a post-processing to the optimized motion. This is disadvantageous
 because separate application of collision avoidance may lead to
 unnatural motion. 
@@ -167,7 +167,7 @@ unnatural motion.
 Previous research is therefore still lacking 
 motion optimization capacity taking into account
 motion retargeting, dynamics constraints and
-self-collision or interaction with enviroment at the same time, in
+self-collision or interaction with environment at the same time, in
 order to create the humanoid motion as close as human motions.
 In this paper, we address this retargeting problem by formulating it
 as a nonlinear optimization problem, taking into account spatial and
