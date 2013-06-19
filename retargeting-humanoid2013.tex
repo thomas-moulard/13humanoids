@@ -59,12 +59,12 @@ This is the abstract.
 \label{sec:intro}
 
 One of the advantages of human-size humanoid robots is
-its ability of generation whole-body motions maintaining similar
+its ability to generate whole-body motions maintaining similar
 dynamics to humans. 
 This ability allows a humanoid robot to serve as an entertainer like
 a dancer of an actor \cite{nakaoka_iros2010}, or also to use various
 machines and devices designed for humans \cite{Yokoi03iros}.
-As an extension of latter use, a new application
+As an extension of the latter use, a new application
 has recently been studied: a humanoid robot as an evaluator of human
 assistive devices \cite{Takanishi06ICRA,Miura13ICRA}.
 If a humanoid reproduces human motions faithfully, it can be used to
@@ -89,9 +89,9 @@ motion capture system.
 Regargeting captured motion to humanoids has been
 actively studied during last decade, thanks to the progress of their
 dynamic capability. The work of Pollard \cite{Pollard02ICRA} is one of
-the pioneering research that enables conversion from whole-body motion
-to a humanoid taking into account various constraints, in this case
-the upper body of Sarcos humanoid robot.
+the pioneering studies that enable reproduction of human motions
+by a humanoid, in this case the upper body of Sarcos humanoid robot,
+by taking into account various constraints. 
 Nakaoka et al. developed a technique to  transfer
 Japanese traditional dancing motions  to a humanoid by introducing a
 notion of leg task model \cite{nakaoka_icra2004,nakaoka_2007}.
@@ -120,13 +120,13 @@ extraction of upper-body motion from markerless motion input
 % \end{itemize}
 
 
-Motion retargeting has been investigated in computer
-graphics domain, typically to generate motions for new characters
-based on motion capture data using space-time constraints solver
-\cite{Gleicher98}.  
+On the other hand, motion retargeting has been investigated
+intensively in computer graphics domain, typically to generate motions
+for new characters based on motion capture data using space-time
+constraints solver \cite{Gleicher98}.  
 Recently, Ho et al. proposed a new retargeting method called
 ``Interaction Mesh'' 
-that preserves spatial relationship between closely interacting body
+that preserves the spatial relationship between closely interacting body
 parts and the objects in the environments \cite{Komura10}.
 Nakaoka and Kokura extended this method for retargeting to a humanoid
 robot by taking advantage of its capacity to adapt motions
@@ -139,9 +139,9 @@ dynamic constraints such as torque limits or dynamic ZMP-based stability.
 
 
 % Optim
-On the other hand, optimization techniques are more and more used to
-generate robot trajectories minimizing certain cost function under
-mechanical or dynamic constraints.
+Another related domain is the optimization technique that is more and
+more employed to generate robot trajectories minimizing certain cost
+function under mechanical or dynamic constraints.
 Miossec et al. applied nonlinear optimization dynamic whole-body motion
 like a kicking motion of a human-size humanoid \cite{Miossec06ROBIO}.
 Recently the optimization is utilized for generation of multi-contact
@@ -164,13 +164,13 @@ unnatural motion.
 % To our knowledge, there has been no motion optimization integrating
 % motion retargeting and self-collision or interaction with
 % environment at the same time.
-Previous research is therefore still lacking 
-motion optimization capacity taking into account
-motion retargeting, dynamics constraints and
-self-collision or interaction with environment at the same time, in
-order to create the humanoid motion as close as human motions.
-In this paper, we address this retargeting problem by formulating it
-as a nonlinear optimization problem, taking into account spatial and
+Methods in previous research are therefore still lacking 
+capability to optimize humanoid motions by taking into account 
+retargeting, dynamics constraints and
+self-collision at the same time, in
+order to create the humanoid motion as close to human motions as possible.
+In this paper, we address this retargeting by formulating it
+as a nonlinear optimization problem upder spatial and
 dynamic constraints.
 Our contributions are...
 The paper is organized as follows...
