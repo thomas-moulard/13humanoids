@@ -49,13 +49,25 @@ Tsukuba Central 2, 1-1-1 Umezono, Ibaraki 305-8568 Japan
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-This is the abstract.
-
+In this paper we present an optimization-based retargeting method for
+precise reproduction of captured human motions by a humanoid robot.
+We take into account two important aspects of retargeting
+simultaneously: spatial relationship and robot dynamics model.
+The former takes care of the spatial relationship between the body
+parts based on ``interaction mesh'' to follow the human motion in a
+natural manner, whereas the latter adapts the resulting motion in such
+a way that the dynamic constraints such as torque limit or dynamic
+balance are satisfied. 
+We have integrated the interaction mesh and the dynamic constraints in an
+optimization framework, which is advantageous for generation of
+natural motions by a humanoid robot compared to 
+previous work that performs those processes separately. The retargeted
+motions are validated through dynamic simulations of a humanoid robot.
 \end{abstract}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{INTRODUCTION}
+\section{Introduction}
 \label{sec:intro}
 
 One of the advantages of human-size humanoid robots is
@@ -125,17 +137,19 @@ intensively in computer graphics domain, typically to generate motions
 for new characters based on motion capture data using space-time
 constraints solver \cite{Gleicher98}.  
 Recently, Ho et al. proposed a new retargeting method called
-``Interaction Mesh'' 
+``interaction mesh'' 
 that preserves the spatial relationship between closely interacting body
 parts and the objects in the environments \cite{Komura10}.
 Nakaoka and Kokura extended this method for retargeting to a humanoid
 robot by taking advantage of its capacity to adapt motions
 to a character with very different physical properties
-\cite{Nakaoka12Humanoids}. Usage of Interaction Mesh brings natural
+\cite{Nakaoka12Humanoids}. Usage of interaction mesh brings natural
 following of original human motion and self-collision avoidance.
-Although this method includes
-balance consideration by shifting the waist,  it does not deal with 
-dynamic constraints such as torque limits or dynamic ZMP-based stability.
+Although this method includes quasi-static
+balance consideration by shifting the waist, it does not deal with 
+dynamic constraints such as torque limits or dynamic ZMP-based
+stability. In addition, those constraints are treated separately after
+generating retargeted motion to adapt to the humanoid.
 
 
 % Optim
@@ -154,9 +168,10 @@ of dynamics \cite{Suleiman07Humanoids} and applied it to human motion
 imitation \cite{Suleiman08ICRA}. 
 The latter research aims at optimizing the humanoid trajectory to be as
 close as human motion, but self-collision avoidance is incorporated as
-a post-processing to the optimized motion. This is disadvantageous
+a post-processing to the optimized motion like previous work
+\cite{Nakaoka12Humanoids}. This is disadvantageous 
 because separate application of collision avoidance may lead to
-unnatural motion. 
+unnatural motions. 
 
 
 % Motivation and contributions
