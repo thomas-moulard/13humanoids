@@ -8,3 +8,6 @@
 *.d
 *.fls
 *.pdf
+*.auxbbl.make.temp
+*.out
+*.out.make
