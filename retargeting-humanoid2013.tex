@@ -239,25 +239,13 @@ the paper.
 \label{sec:overview}
 
 The proposed retargeting framework consists of three steps as shown in
-Fig.~\ref{fig:algorithm}. 
+Fig.~\ref{fig:algorithm} and  
+takes a time series of captured marker positions to
+generate a retargeted robot joint trajectory.  
 The main part of the retargeting is the second step, which is the main
 optimization process whereas the first and last steps are additional
 data processing for efficient optimization and motion conversion
 respectively. 
-The previous work \cite{Nakaoka12Humanoids} adopt a two-step optimization:
-first the markers were optimized before adapting the motion by
-optimizing joint angles for the robot. 
-In contrast, in the proposed method the
-optimization variables are the marker position throughout the
-retargeting process until it is converted to joint angles at the last step.
-% Until the second step, the optimization is applied to the positions of
-% marker sets, which is the spatial coordinates of points on the body parts.
-% In our case, to preserve a global framework only the marker position is
-% optimized along the process. On the opposite, we rely on inverse
-% kinematics to estimate the nearest robot configuration at each point
-of time. Therefore, the robotics constraints are evaluated for the
-estimation of the robot configuration deduced from marker positions.
-
 
 The first pre-processing takes care of initial guess for the
 optimzation. It takes care of retargeting problem only to fit the
@@ -275,11 +263,27 @@ first step and then takes the full problem into consderation.
 This optimization incorporates robotic constraints such as
 motion balance and torque constraints together with the spatial
 relationship modeled also by interaction mesh.
-
-
+The previous work \cite{Nakaoka12Humanoids} adopt a two-step approach
+for this optimization:
+first the markers were optimized before adapting the motion by
+optimizing joint angles for the robot in order to satisfy robotic
+constraints.  
+In contrast, in the proposed method the
+optimization variables are the marker position throughout the
+retargeting process until it is converted to joint angles at the last
+step.
+This is advantageous to preserve a global optimization framework
+unifying all the constraints simultaneously. 
+% Until the second step, the optimization is applied to the positions of
+% marker sets, which is the spatial coordinates of points on the body parts.
+% In our case, to preserve a global framework only the marker position is
+% optimized along the process. On the opposite, 
+Inverse  kinematics computation is employed in order to estimate the
+nearest robot configuration at each time step. The robotic
+constraints are thus evaluated with the robot configuration and
+dynamics deduced from marker positions. 
 The robotic constraints being non-linear, this main
 optimization problem is much more computationally intensive.
-
 
 The third post-processing step is conversion of the resultant marker
 positions into the robot joint configurations that is done in a
