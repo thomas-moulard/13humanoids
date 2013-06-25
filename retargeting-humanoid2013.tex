@@ -312,6 +312,26 @@ markers whereas isolated ones will move for a lower cost.
 
 % Talk about acceleration penalty?
 
+A second cost function is added to the first one to smooth the
+motion. To achieve this goal, the marker set acceleration energy is
+considered:
+
+\begin{equation}
+  E_A(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}') =
+  \frac{1}{2} || \mathbf{V}_{i-1}' - 2 \mathbf{V}_{i}' + \mathbf{V}_{i+1}' ||^2
+\end{equation}
+
+$\mathbf{V}_{i-1}'$, $\mathbf{V}_{i}'$, $\mathbf{V}_{i+1}'$ being the
+new marker set position for the frame $i - 1$, $i$ and $i +
+1$. Acceleration energy is always null for first and last frame.
+
+The final cost function $C$ is by consequence expressed by:
+
+\begin{equation}
+    C(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}') =
+    E_L(\mathbf{V}_{i}') + E_A(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}')
+\end{equation}
+
 
 Additionally, a bone length constraint is defined. This constraint
 aims at retargeting the motion so that it fits the robot
@@ -380,7 +400,8 @@ the robot support polygon:
 
 Where $(x_{ZMP}, y_{ZMP})$ is the ZMP position on the
 ground. $\dot{\sigma}$ the variation of the kinetic momentum around
-the center of mass and $(x_G, y_G, z_G)$ the center of mass position. $g$ is the gravitational constant.
+the center of mass and $(x_G, y_G, z_G)$ the center of mass
+position. $g$ is the gravitational constant.
 
 The ZMP acts as a criterion allowing to decide whether a motion is
 balanced or not. As long as it stays inside the convex hull of the
@@ -394,8 +415,29 @@ to make sure the ZMP is staying inside the current support polygon.
 The second robotics constraint we take into account in this problem
 are the joints limitations. Given $(\mathbf{q}, \dot{\mathbf{q}},
 \ddot{\mathbf{q}})$, the inverse dynamics algorithm \cite{FIXME} will
-compute $(\tau_1, \cdots, \tau_o)$ the set of torques applied to each
-robot joint.
+compute $\mathbf{\tau} = (\tau_1, \cdots, \tau_o)$ the set of torques
+applied to each robot joint using the classical equation of motion:
+
+\begin{equation}
+  \mathbf{M}(\mathbf{q}) \ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q},
+  \dot{\mathbf{q}}) + \mathbf{G}(\mathbf{q}) = \mathbf{\tau}
+\end{equation}
+
+Where $\mathbf{M}(\mathbf{q})$ is the system mass matrix,
+$\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})$ is the vector of Coriolis
+and centrifugal forces and $\mathbf{G}(\mathbf{q})$ the vector of
+gravitational forces.
+
+Therefore, other constraints are expressed as:
+
+\begin{equation}
+  \begin{array}{ccc}
+    \mathbf{q}_{min} \leq \mathbf{q} \leq \mathbf{q}_{max} \\
+    \mathbf{dq}_{min} \leq \dot{\mathbf{q}} \leq \mathbf{dq}_{max} \\
+    \mathbf{\tau}_{min} \leq \mathbf{\tau} \leq \mathbf{\tau}_{max} \\
+    \end{array}
+\end{equation}
+
 
 
 \section{Implementation of the optimization problem using RobOptim}
