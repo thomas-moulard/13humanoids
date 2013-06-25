@@ -13,8 +13,8 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="architecture.svg">
   <defs
      id="defs4">
     <marker
@@ -81,17 +81,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="735.85514"
-     inkscape:cy="667.6678"
+     inkscape:cx="846.92074"
+     inkscape:cy="781.95351"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="2495"
-     inkscape:window-height="1416"
-     inkscape:window-x="65"
-     inkscape:window-y="24"
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
@@ -109,7 +109,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -118,113 +118,128 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:none;stroke:#000000;stroke-width:2.74209785;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:none;stroke:#000000;stroke-width:2.12987018;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect2987"
-       width="380"
-       height="200"
-       x="20"
-       y="32.362183" />
+       width="339.89795"
+       height="134.89795"
+       x="19.693886"
+       y="83.484642" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="208.03711"
-       y="68.362183"
+       x="190"
+       y="112.36218"
        id="text2989"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2991"
-         x="301.79199"
-         y="68.362183"
-         style="font-size:20px;text-align:center;text-anchor:middle;font-weight:bold;-inkscape-font-specification:Sans Bold">Motion Retargeting</tspan></text>
+         x="190"
+         y="112.36218"
+         style="font-size:20px;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans Bold">Pre-processing</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="44.462402"
-       y="120.36218"
+       y="161.07646"
        id="text2993"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2995"
          x="44.462402"
-         y="120.36218"
+         y="161.07646"
          style="font-size:18px"><tspan
    style="font-weight:bold;-inkscape-font-specification:Sans Bold"
    id="tspan3001">Cost:</tspan> Laplacian Deformation Energy</tspan><tspan
          sodipodi:role="line"
          x="44.462402"
-         y="142.86218"
+         y="183.57646"
          id="tspan2997"
          style="font-size:18px"><tspan
    style="font-weight:bold;-inkscape-font-specification:Sans Bold"
    id="tspan3003">Constraint:</tspan> Bone Length</tspan><tspan
          sodipodi:role="line"
          x="44.462402"
-         y="165.36218"
+         y="206.07646"
          id="tspan2999"
          style="font-size:18px" /></text>
     <rect
-       style="fill:none;stroke:#000000;stroke-width:2.74209785;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:none;stroke:#000000;stroke-width:3.09237957;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect2987-1"
-       width="380"
-       height="200"
-       x="502"
-       y="32.362183" />
+       width="357.50687"
+       height="270.36401"
+       x="502.17514"
+       y="7.537324" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="691.87793"
-       y="68.362183"
+       x="690"
+       y="52.362183"
        id="text2989-6"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2991-0"
-         x="691.87793"
-         y="68.362183"
-         style="font-size:20px;text-align:center;text-anchor:middle;font-weight:bold;-inkscape-font-specification:Sans Bold">Robotics Motion Generation</tspan></text>
+         x="690"
+         y="52.362183"
+         style="font-size:20px;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans Bold">Optimization for retargeting</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="526.4624"
-       y="120.36218"
+       x="530"
+       y="102.36218"
        id="text2993-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2995-1"
-         x="526.4624"
-         y="120.36218"
+         x="530"
+         y="102.36218"
          style="font-size:18px"><tspan
    style="font-weight:bold;-inkscape-font-specification:Sans Bold"
-   id="tspan3001-1">Cost:</tspan> Laplacian Deformation Energy</tspan><tspan
+   id="tspan3001-1">Cost:</tspan> </tspan><tspan
          sodipodi:role="line"
-         x="526.4624"
-         y="142.86218"
+         x="530"
+         y="124.86218"
+         style="font-size:18px"
+         id="tspan3037"> - Laplacian Deformation Energy</tspan><tspan
+         sodipodi:role="line"
+         x="530"
+         y="147.36218"
+         style="font-size:18px"
+         id="tspan3039"> - Sum of joint acceleration</tspan><tspan
+         sodipodi:role="line"
+         x="530"
+         y="169.86218"
+         style="font-size:18px"
+         id="tspan3041" /><tspan
+         sodipodi:role="line"
+         x="530"
+         y="192.36218"
          id="tspan2997-9"
          style="font-size:18px"><tspan
    style="font-weight:bold;-inkscape-font-specification:Sans Bold"
    id="tspan3003-8">Constraints:</tspan> </tspan><tspan
          sodipodi:role="line"
-         x="526.4624"
-         y="165.36218"
+         x="530"
+         y="214.86218"
          style="font-size:18px"
-         id="tspan3047">- Bone Length</tspan><tspan
+         id="tspan3047"> - Bone Length</tspan><tspan
          sodipodi:role="line"
-         x="526.4624"
-         y="187.86218"
+         x="530"
+         y="237.36218"
          style="font-size:18px"
-         id="tspan3049">- Joints position, velocity, torque limits</tspan><tspan
+         id="tspan3049"> - Joints position, velocity, torque limits</tspan><tspan
          sodipodi:role="line"
-         x="526.4624"
-         y="210.36218"
+         x="530"
+         y="259.86218"
          style="font-size:18px"
-         id="tspan3051">- Robot dynamic balance</tspan><tspan
+         id="tspan3051"> - Robot dynamic balance</tspan><tspan
          sodipodi:role="line"
-         x="526.4624"
-         y="232.86218"
+         x="530"
+         y="282.36218"
          id="tspan2999-3"
          style="font-size:18px" /></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:2.02921486;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#Arrow1Lend)"
-       d="M 399.98936,151.35914 500,151.93652"
+       style="fill:none;stroke:#000000;stroke-width:2.38925624;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#Arrow1Lend)"
+       d="m 358.02652,151.36831 141.79346,0.56457"
        id="path3053"
        inkscape:connector-curvature="0" />
     <path
@@ -234,42 +249,42 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-72"
-       y="136.36218"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="-90"
+       y="132.36218"
        id="text4653"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4655"
-         x="-72"
-         y="136.36218">marker positions</tspan></text>
+         x="-90"
+         y="132.36218">marker positions</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="412"
-       y="138.36218"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="380"
+       y="132.36218"
        id="text4653-2"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4655-9"
-         x="412"
-         y="138.36218">marker positions</tspan></text>
+         x="380"
+         y="132.36218">marker positions</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:2.02921486;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#Arrow1Lend)"
-       d="M 881.98936,153.7848 982,154.36218"
+       style="fill:none;stroke:#000000;stroke-width:2.19662857;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#Arrow1Lend)"
+       d="m 863.50164,153.78906 118.41465,0.57143"
        id="path3053-8-2"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="892"
-       y="138.36218"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="870"
+       y="132.36218"
        id="text4653-6"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4655-1"
-         x="892"
-         y="138.36218">marker positions</tspan></text>
+         x="870"
+         y="132.36218">marker positions</tspan></text>
     <rect
        style="fill:none;stroke:#000000;stroke-width:2.89455104;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect4708"
@@ -280,15 +295,20 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="1101.6606"
-       y="160.81824"
+       x="1100"
+       y="152.36218"
        id="text4710"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4712"
-         x="1101.6606"
-         y="160.81824"
-         style="font-size:20px;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans Bold">Inverse Kinematics</tspan></text>
+         x="1100"
+         y="152.36218"
+         style="font-size:20px;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans Bold">Motion conversion</tspan><tspan
+         sodipodi:role="line"
+         x="1100"
+         y="177.36218"
+         style="font-size:20px;font-weight:bold;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans Bold"
+         id="tspan3027">to robot</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:2.02921486;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#Arrow1Lend)"
        d="M 1217.9894,151.7848 1318,152.36218"
@@ -297,13 +317,24 @@
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="1228"
-       y="136.36218"
+       x="1230"
+       y="132.36218"
        id="text4653-6-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="1228"
-         y="136.36218"
-         id="tspan4744">joints trajectory</tspan></text>
-  </g>
+         x="1230"
+         y="132.36218"
+         id="tspan4744"
+         style="font-size:14px">joint trajectory</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3029"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion3031"><rect
+           id="rect3033"
+           width="250"
+           height="150"
+           x="1009.2857"
+           y="123.07647" /></flowRegion><flowPara
+         id="flowPara3035"></flowPara></flowRoot>  </g>
 </svg>
