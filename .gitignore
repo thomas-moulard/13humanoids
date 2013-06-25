@@ -1,0 +1,10 @@
+*.log
+*.aux
+*.aux.make
+*.auxbbl.make
+*.auxtarget.make
+*.bbl
+*.blg
+*.d
+*.fls
+*.pdf
