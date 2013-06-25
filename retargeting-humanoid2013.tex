@@ -290,44 +290,51 @@ positions into the robot joint configurations that is done in a
 straightforward manner using inverse kinematics.  
 
 
-\section{Retargeting Method}
+\section{Optimization-based Retargeting Method}
 \label{sec:retargeting}
 
 % \subsection{Modeling}
-
+As decribed in the previous section, our retargeting method has two
+main components: motion retargeting and robotic motion generation that
+are integrated in the optimization. This section will detail
+their computational aspects.
 
 \subsection{Motion retargeting}
 
-
 \begin{figure*}[htbp!]
   %\includegraphics[width=\linewidth]{figure/retargeting.jpg}
+  \vspace*{3cm}
   \label{fig:retargeting}
   \caption{The marker set before (a) and after (b) the initial
     retargeting phase.}
 \end{figure*}
 
+The retargeting algorithm employed in the first two steps in the
+framework of Fig.~\ref{fig:algorithm} relies on 
+%The retargeting has been described extensively
+% \cite{Nakaoka12Humanoids}. It relies on 
+the notion of ``interaction mesh'' to ensure that 
+spatial relationship between bodies is preserved
+\cite{Nakaoka12Humanoids}. 
+We will briefly describe how it is incorporated in the optimization.
 
-The first optimization problem has been described extensively in
-FIXME. It relies on the notion of ``interaction mesh'' to ensure that
-spatial relationship between bodies is preserved.
-
-By applying Delaunay Tetrahedralization \cite{FIXME} on the marker
+By applying Delaunay Tetrahedralization \cite{Si2005} on the marker
 set, one can generate a mesh which is parameterized by the marker
 positions $\mathbf{V}_i = (\mathbf{p}^i_1 \cdots \mathbf{p}^i_m)$
-where $1 \leq n \leq n$. $n$ denotes here the number of frame
+where $1 \leq i \leq n$. $n$ denotes here the number of frame
 composing the motion and $m$ the number of markers in each
 frame. $\mathbf{p}^i_1$ represents the position of the first marker in
 the $i$-th frame.
 
 Given a particular interaction mesh, one can compute the ``Laplacian
-Coordinate'' of one marker as follow:
+Coordinate'' of one marker as follows:
 
 \begin{equation}\label{eq:laplacian-coordinate}
 L(p^i_j) = \mathbf{p}_i^j - \sum_{l \in N_j} w^j_l \mathbf{p}^i_l
 \end{equation}
 
-In \autoref{eq:laplacian-coordinate}, $N_j$ is the one-ring
-neighborhood of marker $j$ in the interaction mesh and $w^j_l$ is the
+In Eq.~(\ref{eq:laplacian-coordinate}), $N_j$ is the one-hop
+neighborhood of the marker $j$ in the interaction mesh and $w^j_l$ is the
 weight of the marker $l$ when computing the Laplacian Coordinate of
 marker $j$. This weight is inversely proportional to the distance
 between $j$ and $l$.
@@ -373,7 +380,7 @@ The final cost function $C$ is by consequence expressed by:
 
 Additionally, a link length constraint is defined. This constraint
 aims at retargeting the motion so that it fits the robot
-morphology. It is defined as follow:
+morphology. It is defined as follows:
 
 \begin{equation}
 || \mathbf{p}^1_e - \mathbf{p}^2_e ||^2 = l_e
@@ -396,11 +403,23 @@ With $0 \leq i \leq m$.
 
 
 The quadratic problem is then solved to generate a new set of marker
-position. This set of marker position is now fitting the robot
-structure but may still not being feasible due to physical
-constraints. Therefore, this process is not enough to generate a
-feasible robotics motion. The next section will show how to refine
-this motion to ensure that physical constraints are respected.
+positions. 
+The goal of the first pre-processing step in Fig.~\ref{fig:algorithm}
+is to obtain the 
+marker positions that fit the robot structure sufficiently well.
+Of course, the resulting motion may still not be feasible due to
+physical constraints.
+The output marker positions from the pre-processing is used as the
+initial guess for the main optimization process considering robotic
+constraints as explained in the next subsection.
+
+% This set of marker position is now fitting the robot
+% structure well after the first pre-processing step.
+% However, the motion may still not be feasible due to physical
+% constraints. 
+% Therefore, this process is not enough to generate a
+% feasible robotics motion. The next section will show how to refine
+% this motion to ensure that physical constraints are respected.
 
 
 \subsection{Robotics motion generation}
@@ -481,7 +500,7 @@ Therefore, other constraints are expressed as:
 \section{Implementation of the optimization problem using RobOptim}
 \label{sec:implementation}
 
-
+% sparse
 RobOptim is a framework to ease the development and resolution of
 optimization problems applied to robotics. It relies on a three layer
 architecture: the core layer provides a way to define mathematical
@@ -490,7 +509,7 @@ different State of the Art solver so that they can solve problems
 defined using the representation proposed by the Core layer. To finish
 the application layer contains dedicated mathematical functions which
 can be embedded into different optimization problems. An overview of
-the framework architecture is \autoref{fig:roboptim}.
+the framework architecture is Eq.~(\ref{fig:roboptim}).
 
 
 The interest of adopting such a framework is to take advantage of
