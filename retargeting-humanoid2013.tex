@@ -17,6 +17,7 @@
 % The following packages can be found on http:\\www.ctan.org
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{textcomp}
 %\usepackage{epsfig} % for postscript graphics files
 %\usepackage{mathptmx} % assumes new font selection scheme installed
 %\usepackage{times} % assumes new font selection scheme installed
@@ -119,6 +120,12 @@ extraction of upper-body motion from markerless motion input
 \cite{Dariush08IROS,Do08humanoids}.
 
 
+\begin{figure}
+  \includegraphics[width=\linewidth]{figure/fixme.png}
+  \label{fig:choreonoid-result}
+  \caption{HRP-4C optimized motion using RobOptim and the Choreonoid robotics frameworks.}
+\end{figure}
+
 
 % Human motion based optimization
 % Categoraized related work
@@ -193,7 +200,7 @@ motion capture markers. Once the bone length are resized to match the
 targeted robot morphology, the full problem considering robotics
 constraints is solved. Previous work have included post-processing of
 the generated motion to enforce some additional properties like
-collsion. However, the advantage of this method is that the whole
+collision. However, the advantage of this method is that the whole
 problem is considered during the second optimization problem which
 ensures robotics constraints while preserving spatial relationships.
 
@@ -212,8 +219,12 @@ obtained using this approach.
 \section{Method Overview}
 \label{sec:overview}
 
-\begin{figure*}[ht]
+\begin{figure*}[htbp!]
   \includegraphics[width=\linewidth]{figure/architecture.pdf}
+  \label{fig:algorithm}
+  \caption{The two step retargeting process. The final inverse
+    kinematics step is only here to convert the final motion to joints
+    trajectory.}
 \end{figure*}
 
 
@@ -250,6 +261,14 @@ estimation of the robot configuration deduced from marker positions.
 
 
 \subsection{Motion retargeting}
+
+
+\begin{figure*}[htbp!]
+  %\includegraphics[width=\linewidth]{figure/retargeting.jpg}
+  \label{fig:retargeting}
+  \caption{The marker set before (a) and after (b) the initial
+    retargeting phase.}
+\end{figure*}
 
 
 The first optimization problem has been described extensively in
@@ -293,30 +312,168 @@ set and the updated marker set $\mathbf{V}'_i = (\mathbf{p}^i_1 \cdots
 In practice, this cost function penalizes motion of highly-connected
 markers whereas isolated ones will move for a lower cost.
 
+% Talk about acceleration penalty?
+
+
+Additionally, a bone length constraint is defined. This constraint
+aims at retargeting the motion so that it fits the robot
+morphology. It is defined as follow:
 
 \begin{equation}
-\mathbf{B}_i \mathbf{V}_i' = \mathbf{l}_i
+|| \mathbf{p}^1_e - \mathbf{p}^2_e ||^2 = l_e
 \end{equation}
 
 
+Whenever there is a need for some part of the robot body to stay
+fixed, an optional positionnal constraint is also provided through an
+equality constraint:
+
 \begin{equation}
-\mathbf{K}_i \mathbf{V}_i' = \mathbf{P}_i
+  \mathbf{V}_i' = \mathbf{P}_i
 \end{equation}
+
+With $0 \leq i \leq m$.
+
+% FIXME: sparse matrices are used -> constraints and cost function
+% jacobian mostly empty. See
+% http://homepages.inf.ed.ac.uk/tkomura/SIGGRAPH10_preprint.pdf
+
+
+The quadratic problem is then solved to generate a new set of marker
+position. This set of marker position is now fitting the robot
+structure but may still not being feasible due to physical
+constraints. Therefore, this process is not enough to generate a
+feasible robotics motion. The next section will show how to refine
+this motion to ensure that physical constraints are respected.
 
 
 \subsection{Robotics motion generation}
 
-\section{Implementation}
+
+From the motion generated in the previous section, we will define a
+second non-linear optimization problem. The second optimization
+problem will use the same optimization variables than the first one,
+the same cost function and the same bone length and positional
+constraints.
+
+
+By keeping the previous constraints, one is making sure that the good
+property ensured by the previous phase are kept during this
+optimization step.
+
+
+However, to ensure that the motion is feasible, two additional
+constraints are added:
+\begin{itemize}
+\item Dynamic balance constraint.
+\item Joints position, velocity and torque constraints.
+\end{itemize}
+
+
+The first constraint contrains the ZMP position so that it stays into
+the robot support polygon:
+
+\begin{equation}
+  \begin{array}{ccc}
+    x_{ZMP} &=& x_G - \frac{\dot{\sigma}_y\ +\ m\ z_G\ \ddot{x}_G}{m\ (\ddot{z}_G + g)} \\
+    y_{ZMP} &=& y_G + \frac{\dot{\sigma}_x\ -\ m\ z_G\ \ddot{y}_G}{m\ (\ddot{z}_G + g)}
+    \end{array}
+\end{equation}
+
+Where $(x_{ZMP}, y_{ZMP})$ is the ZMP position on the
+ground. $\dot{\sigma}$ the variation of the kinetic momentum around
+the center of mass and $(x_G, y_G, z_G)$ the center of mass position. $g$ is the gravitational constant.
+
+The ZMP acts as a criterion allowing to decide whether a motion is
+balanced or not. As long as it stays inside the convex hull of the
+robot contact points, the motion is stable.
+
+Knowing which sole of the robot is in contact with the floor and the
+sole geometry, it is possible to insert this equation as a constraint
+to make sure the ZMP is staying inside the current support polygon.
+
+
+The second robotics constraint we take into account in this problem
+are the joints limitations. Given $(\mathbf{q}, \dot{\mathbf{q}},
+\ddot{\mathbf{q}})$, the inverse dynamics algorithm \cite{FIXME} will
+compute $(\tau_1, \cdots, \tau_o)$ the set of torques applied to each
+robot joint.
+
+
+\section{Implementation of the optimization problem using RobOptim}
 \label{sec:implementation}
+
+
+RobOptim is a framework to ease the development and resolution of
+optimization problems applied to robotics. It relies on a three layer
+architecture: the core layer provides a way to define mathematical
+function and their associated derivates, the solver layer encapsulates
+different State of the Art solver so that they can solve problems
+defined using the representation proposed by the Core layer. To finish
+the application layer contains dedicated mathematical functions which
+can be embedded into different optimization problems. An overview of
+the framework architecture is \autoref{fig:roboptim}.
+
+
+The interest of adopting such a framework is to take advantage of
+higher level tools such as numerical differentiation which can be used
+when no analytical gradient is provided by the user. Even if gradient
+is provided, numerical differentiation can be used to ensure the
+computation correctness.
+
+
+\begin{figure}[htbp!]
+  \includegraphics[width=\linewidth]{figure/roboptim-architecture.pdf}
+  \label{fig:roboptim}
+  \caption{RobOptim  architecture.}
+\end{figure}
+
+
+RobOptim is distributed as an open-source library (\mbox{LGPL-3}) through its
+website: \url{http://www.roboptim.net/}
+
 
 
 \section{Results and simulation}
 \label{sec:results}
 
+
+\begin{figure*}[htbp!]
+  %\includegraphics[width=\linewidth]{figure/.pdf}
+  FIXME FIXME FIXME
+  \label{fig:results-torque}
+  \caption{Joint torque after the first and second optimization
+    phase.}
+\end{figure*}
+
+
+
+The proposed algorithm has been applied to different reaching and
+grasping motion.
+
+
+FIXME: list tested motion, draw graphs, make comparison.
+
+
+These motion have been validated in a dynamic simulator to check for
+balance issues. Dynamic simulation and visualization is provided by
+the Choreonoid\footnote{\url{http://www.choreonoid.org/en/}} robotics
+environment.
+
+
+
 \section{Conclusion}
 \label{sec:conclusion}
 
-This is conclusion.
+This paper presented a novel approach combining retargeting and
+robotics constraints into one single nonlinear optimization
+problem. To enhance convergence speed an initial process solving only
+the geometrical part of the problem as a quadratic problem. This
+two-step approach has been validated through the use of a dynamics
+simulator.
+
+Future work includes taking into account additional constraints such
+as auto-collision and extend the motion generation to walking motion.
 
 % \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
@@ -340,7 +497,8 @@ Appendixes should appear before the acknowledgment.
 
 \section*{Acknowledgment}
 
-JSPS Fellowship
+This research was partially supported by the Japan Society for the
+Promotion of Science (JSPS; Grant-in-Aid for JSPS Fellows P12803).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
