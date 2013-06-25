@@ -411,7 +411,8 @@ Of course, the resulting motion may still not be feasible due to
 physical constraints.
 The output marker positions from the pre-processing is used as the
 initial guess for the main optimization process considering robotic
-constraints as explained in the next subsection.
+constraints and retargeting at the same time, as explained in the next
+subsection. 
 
 % This set of marker position is now fitting the robot
 % structure well after the first pre-processing step.
@@ -425,68 +426,73 @@ constraints as explained in the next subsection.
 \subsection{Robotics motion generation}
 
 
-From the motion generated in the previous section, we will define a
-second non-linear optimization problem. The second optimization
-problem will use the same optimization variables than the first one,
-the same cost function and the same link length and positional
-constraints.
-
-
+%From the motion generated in the previous section, 
+We here define a non-linear optimization problem using the motion
+derived with the pre-processing. 
+The same optimization variables, namely the set of marker positions,
+is used also with the cost function and the constraints.
+% than the first one,
+%the same cost function and the same link length and positional
+%constraints.
 By keeping the previous constraints, one is making sure that the good
 properties ensured by the previous phase are kept during this
 optimization step.
 
-
-However, to ensure that the motion is feasible, two additional
-constraints are added:
+To ensure that the motion is feasible by the robot, two
+additional constraints are added in th main optimation process:
 \begin{itemize}
 \item Dynamic balance constraint.
-\item Joints position, velocity and torque constraints.
+\item Joint angle, velocity and torque constraints.
 \end{itemize}
 
-
-The first constraint constrains the ZMP position so that it stays into
-the robot support polygon:
-
+We here need robot configuration $\mathbf{q}$ from the marker
+positions to calculate the following constraints.
+Since the output marker positions from the pre-processing are close
+enough to the feasible robot configuration, we can benefit from the
+joint angle fitting using dampled least square method introduced in
+\cite{Nakaoka12Humanoids}. 
+ 
+The first constraint constrains the ZMP (zero moment point) position
+so that it stays into the robot support polygon:
 \begin{equation}
   \begin{array}{ccc}
     x_{ZMP} &=& x_G - \frac{\dot{\sigma}_y\ +\ m\ z_G\ \ddot{x}_G}{m\ (\ddot{z}_G + g)} \\
     y_{ZMP} &=& y_G + \frac{\dot{\sigma}_x\ -\ m\ z_G\ \ddot{y}_G}{m\ (\ddot{z}_G + g)}
     \end{array}
+\label{eq:zmp}
 \end{equation}
 
 Where $(x_{ZMP}, y_{ZMP})$ is the ZMP position on the
-ground. $\dot{\sigma}$ the variation of the kinetic momentum around
-the center of mass and $(x_G, y_G, z_G)$ the center of mass
-position. $g$ is the gravitational constant.
+ground, $\dot{\sigma}$ the variation of the kinetic momentum around
+the center of mass, and $(x_G, y_G, z_G)$ the center of mass
+position. The gravitational constant is denoted by $g$.
+Here we assume that the robot is moving on a flat floor.
 
-The ZMP acts as a criterion allowing to decide whether a motion is
-balanced or not. As long as it stays inside the convex hull of the
-robot contact points, the motion is stable.
+The ZMP acts as a criterion allowing to decide whether a motion can be
+executed stably or not. As long as it stays inside the convex hull of the
+robot contact points with the floor, the motion is dynaically stable.
+Knowing which foot of the robot is in contact with the floor and the
+foot geometry, it is possible to insert this equation as a constraint
+to make sure that the ZMP is staying inside the current support polygon.
 
-Knowing which sole of the robot is in contact with the floor and the
-sole geometry, it is possible to insert this equation as a constraint
-to make sure the ZMP is staying inside the current support polygon.
-
-
-The second robotics constraint we take into account in this problem
-are the joints limitations. Given $(\mathbf{q}, \dot{\mathbf{q}},
-\ddot{\mathbf{q}})$, the inverse dynamics algorithm \cite{FIXME} will
-compute $\mathbf{\tau} = (\tau_1, \cdots, \tau_o)$ the set of torques
-applied to each robot joint using the classical equation of motion:
+The second robotic constraint we take into account in this problem
+is the joints limitations. Given $(\mathbf{q}, \dot{\mathbf{q}},
+\ddot{\mathbf{q}})$, % the dynamics algorithm,  % \cite{FIXME} 
+%for example using the method presented in \cite{Featherstone2008}
+the set of torques  $\mathbf{\tau} = (\tau_1, \cdots, \tau_o)$
+applied to each robot joint can be computed using the classical
+equation of motion: 
 
 \begin{equation}
   \mathbf{M}(\mathbf{q}) \ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q},
   \dot{\mathbf{q}}) + \mathbf{G}(\mathbf{q}) = \mathbf{\tau}
 \end{equation}
-
-Where $\mathbf{M}(\mathbf{q})$ is the system mass matrix,
+where $\mathbf{M}(\mathbf{q})$ is the system mass matrix,
 $\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})$ is the vector of Coriolis
 and centrifugal forces and $\mathbf{G}(\mathbf{q})$ the vector of
 gravitational forces.
-
-Therefore, other constraints are expressed as:
-
+Other robotic constraints for limits of joint rotation, velocity and
+torque are expressed as:
 \begin{equation}
   \begin{array}{ccc}
     \mathbf{q}_{min} \leq \mathbf{q} \leq \mathbf{q}_{max} \\
@@ -495,7 +501,12 @@ Therefore, other constraints are expressed as:
     \end{array}
 \end{equation}
 
-
+% post-process
+As mentioned earlier, the output of the main optimization process is
+the set of marker positions. As we have already applied the robotic
+constraints, the resultant motion can be easily converted to the 
+joint trajectory by inverse kinematics to be be executed by 
+the robot. 
 
 \section{Implementation of the optimization problem using RobOptim}
 \label{sec:implementation}
