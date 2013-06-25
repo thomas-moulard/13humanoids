@@ -16,6 +16,7 @@
 
 % The following packages can be found on http:\\www.ctan.org
 \usepackage{graphicx}
+\usepackage{hyperref}
 %\usepackage{epsfig} % for postscript graphics files
 %\usepackage{mathptmx} % assumes new font selection scheme installed
 %\usepackage{times} % assumes new font selection scheme installed
@@ -237,13 +238,70 @@ problem is much more computationally intensive.
 
 \subsection{Modeling}
 
+Contrary to the approach introduced in FIXME, the two optimization
+problems are considering marker position as the problem optimization
+variables. In previous work, first the markers were optimized before
+adapting the motion by optimizing joint angles. On the opposite in our
+case, to preserve a global framework only the marker position is
+optimized along the process. On the opposite, we rely on inverse
+kinematics to estimate the nearest robot configuration at each point
+of time. Therefore the robotics constraints are evaluated for the
+estimation of the robot configuration deduced from marker positions.
+
+
 \subsection{Motion retargeting}
 
 
 The first optimization problem has been described extensively in
-FIXME. It defines the retargeting problem as follow.
+FIXME. It relies on the notion of ``interaction mesh'' to ensure that
+spatial relationship between bodies are preserved.
 
-The cost function is based
+By applying Delaunay Tetrahedralization \cite{FIXME} on the marker
+set, one can generate a mesh which is parametrized by the marker
+positions $\mathbf{V}_i = (\mathbf{p}^i_1 \cdots \mathbf{p}^i_m)$
+where $1 \leq n \leq n$. $n$ denotes here the number of frame
+composing the motion and $m$ the number of markers in each
+frame. $\mathbf{p}^i_1$ represents the position of the first marker in
+the $i$-th frame.
+
+Given a particular interaction mesh, one can compute the ``Laplacian
+Coordinate'' of one marker as follow:
+
+\begin{equation}\label{eq:laplacian-coordinate}
+L(p^i_j) = \mathbf{p}_i^j - \sum_{l \in N_j} w^j_l \mathbf{p}^i_l
+\end{equation}
+
+In \autoref{eq:laplacian-coordinate}, $N_j$ is the one-ring
+neighborhood of marker $j$ in the interaction mesh and $w^j_l$ is the
+weight of the marker $l$ when computing the Laplacian Coordinate of
+marker $j$. This weight is inversely proportional to the distance
+between $j$ and $l$.
+
+Considering these two notions, it is possible to introduce the
+``Laplacian Deformation Energy'' associated to a marker set which
+serve as a cost function in this problem:
+
+\begin{equation}
+E_L(\mathbf{V'}_i) = \sum_j || L(\mathbf{p}^i_j) - L(\mathbf{p}^i_j{}') ||^2
+\end{equation}
+
+The Laplacian Deformation Energy is the square of the norm of the
+difference between the Laplacian Coordinates of the original marker
+set and the updated marker set $\mathbf{V}'_i = (\mathbf{p}^i_1 \cdots
+\mathbf{p}^i_m)$.
+
+In practice, this cost function penalizes motion of highly-connected
+markers whereas isolated ones will move for a lower cost.
+
+
+\begin{equation}
+\mathbf{B}_i \mathbf{V}_i' = \mathbf{l}_i
+\end{equation}
+
+
+\begin{equation}
+\mathbf{K}_i \mathbf{V}_i' = \mathbf{P}_i
+\end{equation}
 
 
 \subsection{Robotics motion generation}
