@@ -51,20 +51,20 @@ Tsukuba Central 2, 1-1-1 Umezono, Ibaraki 305-8568 Japan
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-In this paper we present an optimization-based retargeting method for
+In this paper, we present an optimization-based retargeting method for
 precise reproduction of captured human motions by a humanoid robot.
 We take into account two important aspects of retargeting
-simultaneously: spatial relationship and robot dynamics model.
-The former takes care of the spatial relationship between the body
-parts based on ``interaction mesh'' to follow the human motion in a
-natural manner, whereas the latter adapts the resulting motion in such
-a way that the dynamic constraints such as torque limit or dynamic
-balance are satisfied.
-We have integrated the interaction mesh and the dynamic constraints in an
-optimization framework, which is advantageous for generation of
-natural motions by a humanoid robot compared to
-previous work that performs those processes separately. The retargeted
-motions are validated through dynamic simulations of a humanoid robot.
+simultaneously: spatial relationship and robot dynamics model.  The
+former takes care of the spatial relationship between the body parts
+based on ``interaction mesh'' to follow the human motion in a natural
+manner, whereas the latter adapts the resulting motion in such a way
+that the dynamic constraints such as torque limit or dynamic balance
+are being satisfied.  We have integrated the interaction mesh and the
+dynamic constraints in an optimization framework, which is
+advantageous for generation of natural motions by a humanoid robot
+compared to previous work that performs those processes
+separately. The retargeted motions are being validated through dynamic
+simulations of a humanoid robot.
 \end{abstract}
 
 
@@ -92,31 +92,28 @@ It has been demonstrated that the human-size humanoid HRP-4C
 quantitatively by estimating motor torque \cite{Miura13ICRA}, taking
 an example of a supportive wear called ``Smart Suit Lite''
 \cite{Tanaka11JRM} designed to reduce load
-at lower back with embedded elastic bands.
+at the lower back with embedded elastic bands.
 
 The important issue in those applications is how to generate natural
-motions of a humanoid robot.
-There have been a number of studies on ``motion retargeting''
-techniques in order to
-generate humanoid motions based on those of a human measured by a
-motion capture system.
-Regargeting captured motion to humanoids has been
-actively studied during last decade, thanks to the progress of their
-dynamic capability. The work of Pollard \cite{Pollard02ICRA} is one of
-the pioneering studies that enable reproduction of human motions
-by a humanoid, in this case the upper body of Sarcos humanoid robot,
-by taking into account various constraints.
-Nakaoka et al. developed a technique to  transfer
-Japanese traditional dancing motions  to a humanoid by introducing a
-notion of leg task model \cite{nakaoka_icra2004,nakaoka_2007}.
-Miura et al. \cite{Miura11IROS} devised a walking pattern generator
-that allows the humanoid robot HRP-4C to walk in a manner very close
-to humans, including stretched knees, swing-leg trajectory and single
-support phase on the toe.
-Other imitation methods have been proposed based on a dynamic
-controller  \cite{Yamane11humanoids,Ramos11humanoids},
-motion recognition and primitives \cite{Ott08humanoids} and
-extraction of upper-body motion from markerless motion input
+motions of a humanoid robot.  There have been a number of studies on
+``motion retargeting'' techniques in order to generate humanoid
+motions based on those of a human measured by a motion capture system.
+Regargeting captured motion to humanoids has been actively studied
+during the last decade, thanks to the progress of their dynamic
+capability. The work of Pollard \cite{Pollard02ICRA} is one of the
+pioneering studies that enable reproduction of human motions by a
+humanoid, in this case the upper body of Sarcos humanoid robot, by
+taking into account various constraints.  Nakaoka et al. developed a
+technique to transfer Japanese traditional dancing motions to a
+humanoid by introducing a notion of leg task model
+\cite{nakaoka_icra2004,nakaoka_2007}.  Miura et al. \cite{Miura11IROS}
+devised a walking pattern generator that allows the humanoid robot
+HRP-4C to walk in a manner extremely close to humans, including
+stretched knees, swing-leg trajectory and single support phase on the
+toe.  Other imitation methods have been proposed based on a dynamic
+controller \cite{Yamane11humanoids,Ramos11humanoids}, motion
+recognition and primitives \cite{Ott08humanoids} and extraction of
+upper-body motion from markerless motion input
 \cite{Dariush08IROS,Do08humanoids}.
 
 
@@ -145,10 +142,10 @@ intensively in computer graphics domain, typically to generate motions
 for new characters based on motion capture data using space-time
 constraints solver \cite{Gleicher98}.  Recently, Ho et al\. proposed a
 new retargeting method called ``interaction mesh'' that preserves the
-spatial relationship between closely interacting body parts and the
+spatial relationship between closely interacting body parts and
 objects in the environments \cite{Komura10}.  Nakaoka and Kokura
 extended this method for retargeting to a humanoid robot by taking
-advantage of its capacity to adapt motions to a character with very
+advantage of its capacity to adapt motions to a character with highly
 different physical properties \cite{Nakaoka12Humanoids}. Usage of
 interaction mesh brings natural following of original human motion and
 self-collision avoidance.  Although this method includes quasi-static
@@ -183,12 +180,13 @@ unnatural motions.
 % To our knowledge, there has been no motion optimization integrating
 % motion retargeting and self-collision or interaction with
 % environment at the same time.
-Methods in previous research are therefore still lacking capability to
-optimize humanoid motions by taking into account retargeting, dynamics
-constraints and self-collision at the same time, in order to create
-the humanoid motion as close to human motions as possible. In this
-paper, we address this retargeting by formulating it as a nonlinear
-optimization problem upder spatial and dynamic constraints.
+Methods in previous research are, therefore, still lacking the
+capability to optimize humanoid motions by taking into account
+retargeting, dynamics constraints and self-collision at the same time,
+in order to create the humanoid motion as close to human motions as
+possible. In this paper, we address this retargeting by formulating it
+as a nonlinear optimization problem upder spatial and dynamic
+constraints.
 
 
 %Our contributions are...
@@ -198,8 +196,8 @@ robots. This process relies on the notion of interaction mesh as
 introduced by Ho et al\. to preserve spatial relationships between
 motion capture markers. Once the bone length are resized to match the
 targeted robot morphology, the full problem considering robotics
-constraints is solved. Previous work have included post-processing of
-the generated motion to enforce some additional properties like
+constraints is solved. Previous works include post-processing of the
+generated motion to enforce some additional properties like
 collision. However, the advantage of this method is that the whole
 problem is considered during the second optimization problem which
 ensures robotics constraints while preserving spatial relationships.
@@ -256,7 +254,7 @@ adapting the motion by optimizing joint angles. On the opposite in our
 case, to preserve a global framework only the marker position is
 optimized along the process. On the opposite, we rely on inverse
 kinematics to estimate the nearest robot configuration at each point
-of time. Therefore the robotics constraints are evaluated for the
+of time. Therefore, the robotics constraints are evaluated for the
 estimation of the robot configuration deduced from marker positions.
 
 
@@ -273,7 +271,7 @@ estimation of the robot configuration deduced from marker positions.
 
 The first optimization problem has been described extensively in
 FIXME. It relies on the notion of ``interaction mesh'' to ensure that
-spatial relationship between bodies are preserved.
+spatial relationship between bodies is preserved.
 
 By applying Delaunay Tetrahedralization \cite{FIXME} on the marker
 set, one can generate a mesh which is parametrized by the marker
@@ -325,7 +323,7 @@ morphology. It is defined as follow:
 
 
 Whenever there is a need for some part of the robot body to stay
-fixed, an optional positionnal constraint is also provided through an
+fixed, an optional positional constraint is also provided through an
 equality constraint:
 
 \begin{equation}
@@ -358,7 +356,7 @@ constraints.
 
 
 By keeping the previous constraints, one is making sure that the good
-property ensured by the previous phase are kept during this
+properties ensured by the previous phase are kept during this
 optimization step.
 
 
@@ -370,7 +368,7 @@ constraints are added:
 \end{itemize}
 
 
-The first constraint contrains the ZMP position so that it stays into
+The first constraint constrains the ZMP position so that it stays into
 the robot support polygon:
 
 \begin{equation}
@@ -416,10 +414,10 @@ the framework architecture is \autoref{fig:roboptim}.
 
 
 The interest of adopting such a framework is to take advantage of
-higher level tools such as numerical differentiation which can be used
-when no analytical gradient is provided by the user. Even if gradient
-is provided, numerical differentiation can be used to ensure the
-computation correctness.
+higher level tools such as numerical differentiation, which can be
+used when no analytical gradient is provided by the user. Even if the
+gradient is provided, numerical differentiation can be used to ensure
+the computation correctness.
 
 
 \begin{figure}[htbp!]
@@ -455,7 +453,7 @@ grasping motion.
 FIXME: list tested motion, draw graphs, make comparison.
 
 
-These motion have been validated in a dynamic simulator to check for
+These motions have been validated in a dynamic simulator to check for
 balance issues. Dynamic simulation and visualization is provided by
 the Choreonoid\footnote{\url{http://www.choreonoid.org/en/}} robotics
 environment.
@@ -467,13 +465,14 @@ environment.
 
 This paper presented a novel approach combining retargeting and
 robotics constraints into one single nonlinear optimization
-problem. To enhance convergence speed an initial process solving only
+problem. To enhance convergence speed, an initial process solving only
 the geometrical part of the problem as a quadratic problem. This
 two-step approach has been validated through the use of a dynamics
 simulator.
 
 Future work includes taking into account additional constraints such
-as auto-collision and extend the motion generation to walking motion.
+as auto-collision. Application to walking motion regargeting is also
+considered.
 
 % \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
