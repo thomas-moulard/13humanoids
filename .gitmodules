@@ -1,0 +1,3 @@
+[submodule "jrl-bib"]
+	path = jrl-bib
+	url = https://github.com/thomas-moulard/jrl-bib.git
