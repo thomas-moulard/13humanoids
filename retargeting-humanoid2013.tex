@@ -238,22 +238,37 @@ the paper.
 \section{Method Overview}
 \label{sec:overview}
 
-The proposed method consists of three steps as shown in Fig.~\ref{}
+The proposed method consists of three steps as shown in
+Fig.~\ref{fig:algorithm}. 
+The main part of the retargeting is the second step, which is the main
+optimization process whereas the first and last steps are additional
+data processing for efficient optimization and motion conversion
+respectively. 
+Until the second step, the optimization is applied to the positions of
+marker sets, which is the spatial coordinates of points on the body parts.
 
-The method consists in two consecutive optimization problem. The first
-optimization problem is considering only the retargeting problem
-without integrating any robotics consideration (motion balance or
-torque constraints). This geometric problem can be represented as a
-linear problem with a quadratic cost rendering its resolution
+The first pre-processing takes care of initial guess for the
+optimzation. It takes care of retargeting problem only to fit the
+marker positions to the target robot structure, to obtain the initial
+state that helps the optimization process converge quickly.
+% without integrating any robotics consideration (motion balance or
+% torque constraints). 
+This geometric problem can be represented as a
+linear problem using the interaction mesh \cite{Komura10}
+with a quadratic cost rendering its resolution
 extremely efficient.
 
-Once this problem is solved, the full problem is then taken into
-consideration. This problem is initialized using the result of the
-first optimization problem to ease the convergence. The second problem
-incorporates robotics constraints such as motion balance and torque
-constraints. These constraints being non-linear this optimization
-problem is much more computationally intensive.
+The main optimization process is initialized using the result of the 
+first step and then takes the full problem into consderation. 
+This optimization incorporates robotic constraints such as
+motion balance and torque constraints together with the spatial
+relationship modeled also by interaction mesh.
+The robotic constraints being non-linear, this main
+optimization problem is much more computationally intensive.
 
+The third step is conversion of the resultant marker positions into
+the robot joint configurations that is done in a straightforward
+manner.  
 
 
 \section{Retargeting Method}
