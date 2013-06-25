@@ -7,7 +7,7 @@
 *.blg
 *.d
 *.fls
-*.pdf
 *.auxbbl.make.temp
 *.out
 *.out.make
+retargeting-humanoid2013.pdf*
