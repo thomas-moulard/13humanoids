@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="architecture.svg">
+   sodipodi:docname="architecture.pdf">
   <defs
      id="defs4">
     <marker
@@ -80,19 +80,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="846.92074"
+     inkscape:zoom="0.99"
+     inkscape:cx="565.16532"
      inkscape:cy="781.95351"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1138"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-width="1470"
+     inkscape:window-height="956"
+     inkscape:window-x="200"
+     inkscape:window-y="167"
+     inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
        id="grid2985"
@@ -109,7 +109,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -156,7 +156,7 @@
          id="tspan2997"
          style="font-size:18px"><tspan
    style="font-weight:bold;-inkscape-font-specification:Sans Bold"
-   id="tspan3003">Constraint:</tspan> Bone Length</tspan><tspan
+   id="tspan3003">Constraint:</tspan> Link Length</tspan><tspan
          sodipodi:role="line"
          x="44.462402"
          y="206.07646"
@@ -221,7 +221,7 @@
          x="530"
          y="214.86218"
          style="font-size:18px"
-         id="tspan3047"> - Bone Length</tspan><tspan
+         id="tspan3047"> - Link Length</tspan><tspan
          sodipodi:role="line"
          x="530"
          y="237.36218"

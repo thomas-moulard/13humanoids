@@ -63,7 +63,7 @@ are being satisfied.  We have integrated the interaction mesh and the
 dynamic constraints in an optimization framework, which is
 advantageous for generation of natural motions by a humanoid robot
 compared to previous work that performs those processes
-separately. The retargeted motions are being validated through dynamic
+separately. The re targeted motions are being validated through dynamic
 simulations of a humanoid robot.
 \end{abstract}
 
@@ -182,37 +182,47 @@ unnatural motions.
 % environment at the same time.
 Methods in previous research are, therefore, still lacking the
 capability to optimize humanoid motions by taking into account
-retargeting, dynamics constraints and self-collision at the same time,
+the associated problems for retargeting in a unified manner.
+The main contribution of the paper is the optimization process
+integrating retargeting, dynamics constraints and self-collision at
+the same time, 
 in order to create the humanoid motion as close to human motions as
-possible. In this paper, we address this retargeting by formulating it
-as a nonlinear optimization problem upder spatial and dynamic
+possible. 
+In this paper, we address this retargeting by formulating it
+as a nonlinear optimization problem under spatial and dynamic
 constraints.
-
-
 %Our contributions are...
-The main contribution of this paper is the introduction of a two steps
-optimization process allowing to adapt motion to any humanoid shaped
-robots. This process relies on the notion of interaction mesh as
-introduced by Ho et al\. to preserve spatial relationships between
-motion capture markers. Once the bone length are resized to match the
-targeted robot morphology, the full problem considering robotics
-constraints is solved. Previous works include post-processing of the
-generated motion to enforce some additional properties like
-collision. However, the advantage of this method is that the whole
-problem is considered during the second optimization problem which
-ensures robotics constraints while preserving spatial relationships.
+% the introduction of a two steps optimization process allowing to
+% adapt motion to any humanoid shaped robots. 
+First, the captured motion is pre-processed to provide better initial
+guess for the optimization.
+% Once the link length are resized to match the targeted robot morphology, 
+Then the full optimization problem is solved
+considering the spatial relationship and dynamic robotic constraints
+simultaneously.  
+The spatial relationship between body parts of captured motion is
+reserved by using interaction mesh as introduced by \cite{Komura10},
+which achieves self-collision avoidance in consequence. 
+% In contrast to previous work including post-processing of the 
+% generated motion to enforce some additional properties like
+% self-collision avoidance, the proposed method has 
+% the advantage that the whole
+% problem is considered during the optimization problem which
+% ensures robotics constraints while preserving spatial relationships.
 
 
 %The paper is organized as follows...
-This paper is divided into four sections. The section two describes
-the method and in particular how the two optimization problems are
-formulated. Section three is describing in details the retargeting
-method. After introducing the problem representation, each one of the
-two optimization problems are defined. Section four introduces
-RobOptim, an optimization framework for robotics used to implement
-this paper. The last part deals detail the results in simulation
-obtained using this approach.
-
+This paper is organized as follows. Section~\ref{sec:overview}
+describes the overall method and in particular how the retargeting
+are performed. Section~\ref{sec:retargeting} describes the
+details of each step of the optimization-based retargeting method.
+% problem representation, each step of our retarget
+% two optimization problems are defined. 
+Section~\ref{sec:implementation} introduces 
+RobOptim, an optimization framework for robotics used to implement the
+proposed method. Section~\ref{sec:results} presents the results of
+retargeting with validation of dynamic simulations, before concluding
+the paper.
 
 \section{Method Overview}
 \label{sec:overview}
@@ -224,7 +234,6 @@ obtained using this approach.
     kinematics step is only here to convert the final motion to joints
     trajectory.}
 \end{figure*}
-
 
 The method consists in two consecutive optimization problem. The first
 optimization problem is considering only the retargeting problem
@@ -274,7 +283,7 @@ FIXME. It relies on the notion of ``interaction mesh'' to ensure that
 spatial relationship between bodies is preserved.
 
 By applying Delaunay Tetrahedralization \cite{FIXME} on the marker
-set, one can generate a mesh which is parametrized by the marker
+set, one can generate a mesh which is parameterized by the marker
 positions $\mathbf{V}_i = (\mathbf{p}^i_1 \cdots \mathbf{p}^i_m)$
 where $1 \leq n \leq n$. $n$ denotes here the number of frame
 composing the motion and $m$ the number of markers in each
@@ -333,7 +342,7 @@ The final cost function $C$ is by consequence expressed by:
 \end{equation}
 
 
-Additionally, a bone length constraint is defined. This constraint
+Additionally, a link length constraint is defined. This constraint
 aims at retargeting the motion so that it fits the robot
 morphology. It is defined as follow:
 
@@ -371,7 +380,7 @@ this motion to ensure that physical constraints are respected.
 From the motion generated in the previous section, we will define a
 second non-linear optimization problem. The second optimization
 problem will use the same optimization variables than the first one,
-the same cost function and the same bone length and positional
+the same cost function and the same link length and positional
 constraints.
 
 
@@ -447,7 +456,7 @@ Therefore, other constraints are expressed as:
 RobOptim is a framework to ease the development and resolution of
 optimization problems applied to robotics. It relies on a three layer
 architecture: the core layer provides a way to define mathematical
-function and their associated derivates, the solver layer encapsulates
+function and their associated derivatives, the solver layer encapsulates
 different State of the Art solver so that they can solve problems
 defined using the representation proposed by the Core layer. To finish
 the application layer contains dedicated mathematical functions which
