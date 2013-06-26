@@ -170,7 +170,7 @@ generating retargeted motion to adapt to the humanoid.
 Another related domain is the optimization technique that is more and
 more employed to generate robot trajectories minimizing certain cost
 function under mechanical or dynamic constraints. Miossec et
-al\. applied nonlinear optimization dynamic whole-body motion like a
+al. applied nonlinear optimization to dynamic whole-body motion like a
 kicking motion of a human-size humanoid \cite{Miossec06ROBIO}.
 Recently the optimization is utilized for generation of multi-contact
 dynamic motion through modeling of dynamic constraints using Taylor
@@ -229,7 +229,7 @@ which achieves self-collision avoidance in consequence.
 %The paper is organized as follows...
 This paper is organized as follows. Section~\ref{sec:overview}
 describes the overall method and in particular how the retargeting
-are performed. Section~\ref{sec:retargeting} describes the
+is performed. Section~\ref{sec:retargeting} describes the
 details of each step of the optimization-based retargeting method.
 % problem representation, each step of our retarget
 % two optimization problems are defined. 
@@ -267,7 +267,7 @@ first step and then takes the full problem into consideration.
 This optimization incorporates robotic constraints such as
 motion balance and torque constraints together with the spatial
 relationship modeled also by interaction mesh.
-The previous work \cite{Nakaoka12Humanoids} adopt a two-step approach
+The previous work \cite{Nakaoka12Humanoids} adopts a two-step approach
 for this optimization:
 first the markers were optimized before adapting the motion by
 optimizing joint angles for the robot in order to satisfy robotic
@@ -436,7 +436,7 @@ subsection.
 We here define a non-linear optimization problem using the motion
 derived with the pre-processing. 
 The same optimization variables, namely the set of marker positions,
-is used also with the cost function and the constraints introduced in
+are used also with the cost function and the constraints introduced in
 the previous section.
 % than the first one,
 %the same cost function and the same link length and positional
@@ -481,7 +481,7 @@ ground, $\dot{\sigma}$ the variation of the kinetic momentum around
 the center of mass, and $(x_G, y_G, z_G)$ the center of mass
 position. The gravitational constant is denoted by $g$.
 Here we assume that the robot is moving on a flat floor.
-The ZMP acts as a criterion allowing to decide whether a motion can be
+The ZMP acts as a criterion that allows deciding whether a motion can be
 executed stably or not. As long as it stays inside the convex hull of the
 robot contact points with the floor, the motion is dynamically stable.
 Knowing which foot of the robot is in contact with the floor and the
@@ -525,8 +525,8 @@ torque are expressed as:
 As mentioned earlier, the output of the main optimization process is
 the set of marker positions. As we have already applied the robotic
 constraints, the resultant motion can be easily converted to the 
-joint trajectory by inverse kinematics to be be executed by 
-the robot. 
+joint trajectory to be executed by the robot through inverse
+kinematics.
 
 \section{Implementation of the optimization problem using RobOptim}
 \label{sec:implementation}
@@ -538,7 +538,7 @@ The optimization is more and more applied to robotics field to solve
 complex problems of motion planning and generation with many
 constraints, as mentioned earlier.
 Although number of state-of-the-art optimization solver tools and
-libraries are now available, they are not necessarily ready to
+libraries are now available, they are not necessarily ready for
 immediate use for robotics.
 
 RobOptim has been developed to allow roboticists to prototype their
@@ -634,7 +634,7 @@ pre- and post-processing of the motion.
 %the geometrical part of the problem as a quadratic problem. 
 After obtaining pre-processed marker positions approximately fitted to
 the robot structure, the main optimization process generates 
-also marker motions that respects the original spatial relationship of body
+also marker motions that respect the original spatial relationship of body
 parts as much as possible based on interaction mesh, by satisfying the
 robotic dynamic constraints throughout the motion.
 The optimization output motion can be converted to the robot trajectory
