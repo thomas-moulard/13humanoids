@@ -61,10 +61,10 @@ based on ``interaction mesh'' to follow the human motion in a natural
 manner, whereas the latter adapts the resulting motion in such a way
 that the dynamic constraints such as torque limit or dynamic balance
 are being satisfied.  We have integrated the interaction mesh and the
-dynamic constraints in an optimization framework, which is
+dynamic constraints in a unified optimization framework, which is
 advantageous for generation of natural motions by a humanoid robot
 compared to previous work that performs those processes
-separately. The re targeted motions are being validated through dynamic
+separately. The retargeted motions are being validated through dynamic
 simulations of a humanoid robot.
 \end{abstract}
 
@@ -174,7 +174,10 @@ al\. applied nonlinear optimization dynamic whole-body motion like a
 kicking motion of a human-size humanoid \cite{Miossec06ROBIO}.
 Recently the optimization is utilized for generation of multi-contact
 dynamic motion through modeling of dynamic constraints using Taylor
-expansion \cite{Lengagne13IJRR}. Suleiman et al\. proposed another
+expansion \cite{Lengagne13IJRR}. 
+For dynamic trajectory optimization for digital human, an efficient algorithm
+has been proposed \cite{Todorov2012IROS-online,Todorov2012IROS-contact}.
+Suleiman et al. proposed another
 trajectory optimization technique based on Lie algebra that allows
 efficient computation through analytic integration of dynamics
 \cite{Suleiman07Humanoids} and applied it to human motion imitation
@@ -597,7 +600,7 @@ website: \url{http://www.roboptim.net/}
 \begin{figure*}[htbp!]
   %\includegraphics[width=\linewidth]{figure/.pdf}
   FIXME FIXME FIXME
-  \caption{Joint torque after the first and second optimization
+  \caption{Joint torque after the pre-processing and the main optimization
     phase.}
   \label{fig:results-torque}
 \end{figure*}
@@ -607,9 +610,9 @@ website: \url{http://www.roboptim.net/}
 The proposed algorithm has been applied to different reaching and
 grasping motion.
 
-% Solver?
-
 FIXME: list tested motion, draw graphs, make comparison.
+
+FIXME-EY: Optimization specification: $\alpha=10-{-6}$, solver used (ipopt?), comutation time
 
 
 These motions have been validated in a dynamic simulator to check for
