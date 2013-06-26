@@ -248,7 +248,7 @@ data processing for efficient optimization and motion conversion
 respectively. 
 
 The first pre-processing takes care of initial guess for the
-optimzation. It takes care of retargeting problem only to fit the
+optimization. It takes care of retargeting problem only to fit the
 marker positions to the target robot structure, to obtain the initial
 state that helps the optimization process converge quickly.
 % without integrating any robotics consideration (motion balance or
@@ -259,7 +259,7 @@ with a quadratic cost rendering its resolution
 extremely efficient.
 
 The main optimization process is initialized using the result of the 
-first step and then takes the full problem into consderation. 
+first step and then takes the full problem into consideration. 
 This optimization incorporates robotic constraints such as
 motion balance and torque constraints together with the spatial
 relationship modeled also by interaction mesh.
@@ -272,7 +272,8 @@ In contrast, in the proposed method the
 optimization variables are the marker position throughout the
 retargeting process until it is converted to joint angles at the last
 step.
-This is advantageous to preserve a global optimization framework
+This is advantageous to make the constraint matrix sparse \cite{Komura10}
+and also to maintain a global optimization framework
 unifying all the constraints simultaneously. 
 % Until the second step, the optimization is applied to the positions of
 % marker sets, which is the spatial coordinates of points on the body parts.
@@ -294,7 +295,7 @@ straightforward manner using inverse kinematics.
 \label{sec:retargeting}
 
 % \subsection{Modeling}
-As decribed in the previous section, our retargeting method has two
+As described in the previous section, our retargeting method has two
 main components: motion retargeting and robotic motion generation that
 are integrated in the optimization. This section will detail
 their computational aspects.
@@ -398,7 +399,7 @@ equality constraint:
 With $0 \leq i \leq m$.
 
 % FIXME: sparse matrices are used -> constraints and cost function
-% jacobian mostly empty. See
+% Jacobian mostly empty. See
 % http://homepages.inf.ed.ac.uk/tkomura/SIGGRAPH10_preprint.pdf
 
 
@@ -430,16 +431,21 @@ subsection.
 We here define a non-linear optimization problem using the motion
 derived with the pre-processing. 
 The same optimization variables, namely the set of marker positions,
-is used also with the cost function and the constraints.
+is used also with the cost function and the constraints introduced in
+the previous section.
 % than the first one,
 %the same cost function and the same link length and positional
 %constraints.
-By keeping the previous constraints, one is making sure that the good
-properties ensured by the previous phase are kept during this
+By keeping the previous constraints, one can make sure that the good
+properties ensured by the previous pre-processing are kept during this
 optimization step.
+Moreover, the constraint matrix can be kept sparse by 
+using the marker positions as optimization variables 
+\cite{Komura10}, which makes the optimization computation efficient,
+whereas the joint Jacobian matrix for the robot is dense.
 
 To ensure that the motion is feasible by the robot, two
-additional constraints are added in th main optimation process:
+additional constraints are added in the main optimization process:
 \begin{itemize}
 \item Dynamic balance constraint.
 \item Joint angle, velocity and torque constraints.
@@ -449,7 +455,7 @@ We here need robot configuration $\mathbf{q}$ from the marker
 positions to calculate the following constraints.
 Since the output marker positions from the pre-processing are close
 enough to the feasible robot configuration, we can benefit from the
-joint angle fitting using dampled least square method introduced in
+joint angle fitting using damped least square method introduced in
 \cite{Nakaoka12Humanoids}. 
  
 The first constraint constrains the ZMP (zero moment point) position
@@ -470,7 +476,7 @@ Here we assume that the robot is moving on a flat floor.
 
 The ZMP acts as a criterion allowing to decide whether a motion can be
 executed stably or not. As long as it stays inside the convex hull of the
-robot contact points with the floor, the motion is dynaically stable.
+robot contact points with the floor, the motion is dynamically stable.
 Knowing which foot of the robot is in contact with the floor and the
 foot geometry, it is possible to insert this equation as a constraint
 to make sure that the ZMP is staying inside the current support polygon.
