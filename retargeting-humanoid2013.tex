@@ -150,7 +150,7 @@ upper-body motion from markerless motion input
 On the other hand, motion retargeting has been investigated
 intensively in computer graphics domain, typically to generate motions
 for new characters based on motion capture data using space-time
-constraints solver \cite{Gleicher98}.  Recently, Ho et al\. proposed a
+constraints solver \cite{Gleicher98}.  Recently, Ho et al. proposed a
 new retargeting method called ``interaction mesh'' that preserves the
 spatial relationship between closely interacting body parts and
 objects in the environments \cite{Komura10}.  Nakaoka and Komura
@@ -463,9 +463,9 @@ Since the output marker positions from the pre-processing are close
 enough to the feasible robot configuration, we can benefit from the
 joint angle fitting using damped least square method introduced in
 \cite{Nakaoka12Humanoids}. 
-Once the robot confugurations are obtained, the following 
-constraints are evaluated based on numerical computation by using
-joint velocity and acceleration.
+Once the robot configurations are obtained, the following 
+constraints are evaluated on the numerical basis, by using
+joint velocity and acceleration computed with finite difference.
  
 The first constraint constrains the ZMP (zero moment point) position
 so that it stays into the robot support polygon:
@@ -583,8 +583,8 @@ Although not really utilized in our problem of retargeting, the
 application layer is convenient especially for planning purpose.
 One of the practical tools is the trajectory toolbox,
 which allows representation of robot motion using B-spline. Since
-these are associated with methematical functions of the core layer and
-others like of minimial-time optimization.
+these are associated with mathematical functions of the core layer and
+others like of minimal-time optimization.
 
 
 RobOptim is distributed as an open-source library (\mbox{LGPL-3}) through its
@@ -595,7 +595,7 @@ website: http://www.roboptim.net/
 \section{Results and simulation}
 \label{sec:results}
 
-% alpahe: 10^-6
+% alpha: 10^-6
 
 \begin{figure*}[htbp!]
   %\includegraphics[width=\linewidth]{figure/.pdf}
@@ -612,7 +612,7 @@ grasping motion.
 
 FIXME: list tested motion, draw graphs, make comparison.
 
-FIXME-EY: Optimization specification: $\alpha=10-{-6}$, solver used (ipopt?), comutation time
+FIXME-EY: Optimization specification: $\alpha=10-{-6}$, solver used (ipopt?), computation time
 
 
 These motions have been validated in a dynamic simulator to check for
@@ -636,9 +636,9 @@ After obtaining pre-processed marker positions approximately fitted to
 the robot structure, the main optimization process generates 
 also marker motions that respects the original spatial relationship of body
 parts as much as possible based on interaction mesh, by satisfying the
-robotic dynamic constraints thoughout the motion.
-The optimzation output motion can be converted to the robot trajectory
-in a straightfoward manner by the last step.
+robotic dynamic constraints throughout the motion.
+The optimization output motion can be converted to the robot trajectory
+in a straightforward manner by the last step.
 The effectiveness of the proposed method has been validated by
 simulating the generated robot motion.
 
