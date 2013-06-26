@@ -610,16 +610,28 @@ environment.
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper presented a novel approach combining retargeting and
+This paper presented a unified approach combining retargeting and
 robotics constraints into one single nonlinear optimization
-problem. To enhance convergence speed, an initial process solving only
-the geometrical part of the problem as a quadratic problem. This
-two-step approach has been validated through the use of a dynamics
-simulator.
+problem.
+For efficient computation, a three-step approach is adopted including
+pre- and post-processing of the motion.
+%To enhance convergence speed, an initial process solving only
+%the geometrical part of the problem as a quadratic problem. 
+After obtaining pre-processed marker positions approximately fitted to
+the robot structure, the main optimization process generates 
+also marker motions that respects the original spatial relationship of body
+parts as much as possible based on interaction mesh, by satisfying the
+robotic dynamic constraints thoughout the motion.
+The optimzation output motion can be converted to the robot trajectory
+in a straightfoward manner by the last step.
+The effectiveness of the proposed method has been validated by
+simulating the generated robot motion.
 
-Future work includes taking into account additional constraints such
-as auto-collision. Application to walking motion retargeting is also
-considered.
+Future work includes extensions to take into account different cost
+functions such as human-likeliness, or additional constraints such
+as collision avoidance or other .
+Application to walking motion retargeting will also be addressed in
+future work.
 
 % \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
