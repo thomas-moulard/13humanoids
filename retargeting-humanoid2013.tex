@@ -121,8 +121,8 @@ upper-body motion from markerless motion input
 \begin{figure}
 \begin{center}
   \includegraphics[width=0.6 \linewidth]{figure/fixme.png}
-  \label{fig:choreonoid-result}
   \caption{HRP-4C optimized motion using RobOptim and the Choreonoid robotics frameworks.}
+  \label{fig:choreonoid-result}
 \end{center}
 \end{figure}
 
@@ -140,10 +140,10 @@ upper-body motion from markerless motion input
 
 \begin{figure*}[b]
   \includegraphics[width=\linewidth]{figure/architecture.pdf}
-  \label{fig:algorithm}
   \caption{The two step retargeting process. The final inverse
     kinematics step is only here to convert the final motion to joints
     trajectory.}
+  \label{fig:algorithm}
 \end{figure*}
 
 
@@ -305,9 +305,9 @@ their computational aspects.
 \begin{figure*}[htbp!]
   %\includegraphics[width=\linewidth]{figure/retargeting.jpg}
   \vspace*{3cm}
-  \label{fig:retargeting}
   \caption{The marker set before (a) and after (b) the initial
     retargeting phase.}
+  \label{fig:retargeting}
 \end{figure*}
 
 The retargeting algorithm employed in the first two steps in the
@@ -518,29 +518,59 @@ the robot.
 \label{sec:implementation}
 
 % sparse
-RobOptim is a framework to ease the development and resolution of
-optimization problems applied to robotics. It relies on a three layer
-architecture: the core layer provides a way to define mathematical
-function and their associated derivatives, the solver layer encapsulates
-different State of the Art solver so that they can solve problems
-defined using the representation proposed by the Core layer. To finish
-the application layer contains dedicated mathematical functions which
+RobOptim is a general framework to assist the development and resolution of
+optimization problems applied to robotics. 
+The optimization is more and more applied to robotics field to solve
+complex problems of motion planning and generation with many
+constraints, as mentioned earlier.
+Although number of state-of-the-art optimization solver tools and
+libraries are now available, they are not necessarily ready to
+immediate use for robotics.
+
+RobOptim has been developed to allow roboticists to prototype their
+optimization applications easily by providing necessary interfaces
+specific to robotic problems in the form of C++ libraries.
+It has a three-layer
+architecture: the core, the solver and the application layers.
+The core layer provides a way to define mathematical
+function and their associated derivatives, while the solver layer encapsulates
+different state-of-the-art solvers so that they can solve problems
+defined using the representation proposed by the core layer. 
+The application layer contains dedicated mathematical functions which
 can be embedded into different optimization problems. An overview of
-the framework architecture is Eq.~(\ref{fig:roboptim}).
+the framework architecture is shown in Fig.~(\ref{fig:roboptim}).
 
+\begin{figure}[b]
+  \includegraphics[width=\linewidth]{figure/roboptim-architecture.pdf}
+  \caption{RobOptim  architecture.}
+  \label{fig:roboptim}
+\end{figure}
 
-The interest of adopting such a framework is to take advantage of
-higher level tools such as numerical differentiation, which can be
-used when no analytical gradient is provided by the user. Even if the
+The core layer offers some useful higher-level tools that help users
+define the functions such as costs and constraints introduced in the
+previous section.  
+By implementing those functions inherited from the basic
+mathematical functions of the core layer,  RobOptim ensures the
+compatibility with a number of state-of-the-art solvers whose plug-ins
+are provided in the solver layer.
+Those tools include function definition itself and also
+differentiation of the functions that can be computed analytically, or numerically 
+when no analytical gradient is provided by the user. Even if the
 gradient is provided, numerical differentiation can be used to ensure
 the computation correctness.
+The user can benefit from the transparency of those higher level
+tools to prototype their problem
+without thinking about individual solvers used for optimization.
+% The interest of adopting such a framework is to take advantage of
+% higher level tools such as 
+% numerical differentiation, which can be used 
 
-
-\begin{figure}[htbp!]
-  \includegraphics[width=\linewidth]{figure/roboptim-architecture.pdf}
-  \label{fig:roboptim}
-  \caption{RobOptim  architecture.}
-\end{figure}
+Although not really utilized in our problem of retargeting, the
+application layer is convenient especially for planning purpose.
+One of the practical tools is the trajectory toolbox,
+which allows representation of robot motion using B-spline. Since
+these are associated with methematical functions of the core layer and
+others like of minimial-time optimization.
 
 
 RobOptim is distributed as an open-source library (\mbox{LGPL-3}) through its
@@ -555,9 +585,9 @@ website: \url{http://www.roboptim.net/}
 \begin{figure*}[htbp!]
   %\includegraphics[width=\linewidth]{figure/.pdf}
   FIXME FIXME FIXME
-  \label{fig:results-torque}
   \caption{Joint torque after the first and second optimization
     phase.}
+  \label{fig:results-torque}
 \end{figure*}
 
 
@@ -565,6 +595,7 @@ website: \url{http://www.roboptim.net/}
 The proposed algorithm has been applied to different reaching and
 grasping motion.
 
+% Solver?
 
 FIXME: list tested motion, draw graphs, make comparison.
 
