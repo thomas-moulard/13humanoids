@@ -153,15 +153,16 @@ for new characters based on motion capture data using space-time
 constraints solver \cite{Gleicher98}.  Recently, Ho et al\. proposed a
 new retargeting method called ``interaction mesh'' that preserves the
 spatial relationship between closely interacting body parts and
-objects in the environments \cite{Komura10}.  Nakaoka and Kokura
+objects in the environments \cite{Komura10}.  Nakaoka and Komura
 extended this method for retargeting to a humanoid robot by taking
 advantage of its capacity to adapt motions to a character with highly
 different physical properties \cite{Nakaoka12Humanoids}. Usage of
 interaction mesh brings natural following of original human motion and
-self-collision avoidance.  Although this method includes quasi-static
-balance consideration by shifting the waist, it does not deal with
-dynamic constraints such as torque limits or dynamic ZMP-based
-stability. In addition, those constraints are treated separately after
+self-collision avoidance.  Although this method includes 
+balance consideration by shifting the waist, this approach remains
+specific instead of general whole-body motion optimization and 
+does not deal with dynamic constraints such as torque limits. 
+In addition, those constraints are treated separately after
 generating retargeted motion to adapt to the humanoid.
 
 
@@ -279,10 +280,11 @@ unifying all the constraints simultaneously.
 % marker sets, which is the spatial coordinates of points on the body parts.
 % In our case, to preserve a global framework only the marker position is
 % optimized along the process. On the opposite, 
-Inverse  kinematics computation is employed in order to estimate the
-nearest robot configuration at each time step. The robotic
-constraints are thus evaluated with the robot configuration and
-dynamics deduced from marker positions. 
+Inverse  kinematics computation of the target robot is employed in
+order to estimate the nearest robot configuration from the marker positions
+at each time step. 
+This allows evaluating robotic constraints such as dynamic balance or
+joint torque limit by using deduced joint velocity and acceleration.
 The robotic constraints being non-linear, this main
 optimization problem is much more computationally intensive.
 
@@ -314,10 +316,10 @@ The retargeting algorithm employed in the first two steps in the
 framework of Fig.~\ref{fig:algorithm} relies on 
 %The retargeting has been described extensively
 % \cite{Nakaoka12Humanoids}. It relies on 
-the notion of ``interaction mesh'' to ensure that 
-spatial relationship between bodies is preserved
-\cite{Nakaoka12Humanoids}. 
-We will briefly describe how it is incorporated in the optimization.
+the notion of ``interaction mesh'' to ensure that   
+spatial relationship between bodies is preserved. 
+We will briefly describe how it is incorporated in the optimization
+based on previous work by Ho et al \cite{Komura10}. 
 
 By applying Delaunay Tetrahedralization \cite{Si2005} on the marker
 set, one can generate a mesh which is parameterized by the marker
@@ -375,10 +377,10 @@ The final cost function $C$ is by consequence expressed by:
 
 \begin{equation}
     C(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}') =
-    E_L(\mathbf{V}_{i}') + E_A(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}')
+    E_L(\mathbf{V}_{i}') + \alpha E_A(\mathbf{V}_{i-1}',
+    \mathbf{V}_{i}', \mathbf{V}_{i+1}') 
 \end{equation}
-
-
+where $\alpha$ is the weighting coefficient.
 Additionally, a link length constraint is defined. This constraint
 aims at retargeting the motion so that it fits the robot
 morphology. It is defined as follows:
@@ -452,11 +454,15 @@ additional constraints are added in the main optimization process:
 \end{itemize}
 
 We here need robot configuration $\mathbf{q}$ from the marker
-positions to calculate the following constraints.
+positions to calculate the following constraints with dynamic property
+like mass and moment of inertia of each link.
 Since the output marker positions from the pre-processing are close
 enough to the feasible robot configuration, we can benefit from the
 joint angle fitting using damped least square method introduced in
 \cite{Nakaoka12Humanoids}. 
+Once the robot confugurations are obtained, the following 
+constraints are evaluated based on numerical computation by using
+joint velocity and acceleration.
  
 The first constraint constrains the ZMP (zero moment point) position
 so that it stays into the robot support polygon:
@@ -467,22 +473,27 @@ so that it stays into the robot support polygon:
     \end{array}
 \label{eq:zmp}
 \end{equation}
-
-Where $(x_{ZMP}, y_{ZMP})$ is the ZMP position on the
+where $(x_{ZMP}, y_{ZMP})$ is the ZMP position on the
 ground, $\dot{\sigma}$ the variation of the kinetic momentum around
 the center of mass, and $(x_G, y_G, z_G)$ the center of mass
 position. The gravitational constant is denoted by $g$.
 Here we assume that the robot is moving on a flat floor.
-
 The ZMP acts as a criterion allowing to decide whether a motion can be
 executed stably or not. As long as it stays inside the convex hull of the
 robot contact points with the floor, the motion is dynamically stable.
 Knowing which foot of the robot is in contact with the floor and the
-foot geometry, it is possible to insert this equation as a constraint
-to make sure that the ZMP is staying inside the current support polygon.
+foot geometry, it is possible to insert this  as an
+inequality constraint
+\begin{equation}
+  (x_{ZMP}, y_{ZMP}) \subset {\cal S}(x_{rfoot}, y_{lfoot})
+  \label{eq:support}
+\end{equation}
+to make sure that the ZMP is staying inside the current support
+polygon, denoted by ${\cal S}(x_{rfoot}, y_{lfoot})$ that is
+determined by the right and left positions $(x_{rfoot}, y_{lfoot})$. 
 
 The second robotic constraint we take into account in this problem
-is the joints limitations. Given $(\mathbf{q}, \dot{\mathbf{q}},
+is the joint limitations. Given $(\mathbf{q}, \dot{\mathbf{q}},
 \ddot{\mathbf{q}})$, % the dynamics algorithm,  % \cite{FIXME} 
 %for example using the method presented in \cite{Featherstone2008}
 the set of torques  $\mathbf{\tau} = (\tau_1, \cdots, \tau_o)$
@@ -581,6 +592,7 @@ website: \url{http://www.roboptim.net/}
 \section{Results and simulation}
 \label{sec:results}
 
+% alpahe: 10^-6
 
 \begin{figure*}[htbp!]
   %\includegraphics[width=\linewidth]{figure/.pdf}
