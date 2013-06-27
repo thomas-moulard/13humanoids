@@ -119,11 +119,13 @@ upper-body motion from markerless motion input
 
 
 \begin{figure}
-\begin{center}
-  \includegraphics[width=0.6 \linewidth]{figure/fixme.png}
-  \caption{HRP-4C optimized motion using RobOptim and the Choreonoid robotics frameworks.}
-  \label{fig:choreonoid-result}
-\end{center}
+  \begin{center}
+    \includegraphics[width=0.8 \linewidth]{figure/retargeting-result1.jpg}
+    \caption{HRP-4C optimized motion using RobOptim and the Choreonoid
+      robotics frameworks (yellow is the final result, white the
+      original marker set).}
+    \label{fig:choreonoid-result}
+  \end{center}
 \end{figure}
 
 % Human motion based optimization
@@ -307,13 +309,14 @@ their computational aspects.
 
 \subsection{Motion retargeting}
 
-\begin{figure*}[htbp!]
-  %\includegraphics[width=\linewidth]{figure/retargeting.jpg}
-  \vspace*{3cm}
+\begin{figure}[htbp!]
+  \begin{center}
+    \includegraphics[width=0.8 \linewidth]{figure/retargeting-preprocessing.jpg}
+    \end{center}
   \caption{The marker set before (a) and after (b) the initial
     retargeting phase.}
   \label{fig:retargeting}
-\end{figure*}
+\end{figure}
 
 The retargeting algorithm employed in the first two steps in the
 framework of Fig.~\ref{fig:algorithm} relies on 
@@ -597,30 +600,43 @@ website: http://www.roboptim.net/
 
 % alpha: 10^-6
 
-\begin{figure*}[htbp!]
-  %\includegraphics[width=\linewidth]{figure/.pdf}
-  FIXME FIXME FIXME
-  \caption{Joint torque after the pre-processing and the main optimization
-    phase.}
-  \label{fig:results-torque}
-\end{figure*}
+%\begin{figure*}[htbp!]
+%  %\includegraphics[width=\linewidth]{figure/.pdf}
+%  FIXME FIXME FIXME
+%  \caption{Joint torque after the pre-processing and the main optimization
+%    phase.}
+%  \label{fig:results-torque}
+%\end{figure*}
 
 
-
-The proposed algorithm has been applied to different reaching and
-grasping motion.
-
-FIXME: list tested motion, draw graphs, make comparison.
-
-FIXME-EY: Optimization specification: $\alpha=10-{-6}$, solver used (ipopt?), computation time
+The proposed algorithm has been applied to a whole body motion
+recorded from a human subject using a motion capture setup.
 
 
-These motions have been validated in a dynamic simulator to check for
-balance issues. Dynamic simulation and visualization is provided by
-the Choreonoid\footnote{http://www.choreonoid.org/en/} robotics
-environment.
+The Ipopt plug-in for RobOptim allowed us to solve the problem while
+using sparse matrices computation. This proved particularly useful for
+trajectroy optimization where large matrices are involved. However
+some constraints are only considering one frame and thus associated
+jacobian are containing a large proportion of null values.
 
 
+The result after the optimization process is illustrated by
+Fig.~\ref{fig:retargeting} (post-processing) and
+Fig.~\ref{fig:choreonoid-result} (final result).
+
+
+%FIXME: list tested motion, draw graphs, make comparison.
+%
+%
+%FIXME-EY: Optimization specification: $\alpha=10-{-6}$, solver used
+%(ipopt?), computation time
+%
+%
+%
+%These motions have been validated in a dynamic simulator to check for
+%balance issues. Dynamic simulation and visualization is provided by
+%the Choreonoid\footnote{http://www.choreonoid.org/en/} robotics
+%environment.
 
 \section{Conclusion}
 \label{sec:conclusion}
