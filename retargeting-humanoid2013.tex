@@ -387,7 +387,9 @@ considered:
 
 \begin{equation}
   E_A(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}') =
-  \frac{1}{2} || \mathbf{V}_{i-1}' - 2 \mathbf{V}_{i}' + \mathbf{V}_{i+1}' ||^2
+  \frac{1}{2} || \mathbf{V}_{i-1}' - 2 \mathbf{V}_{i}' +
+  \mathbf{V}_{i+1}' ||^2
+\label{eq:acc-energy}
 \end{equation}
 
 $\mathbf{V}_{i-1}'$, $\mathbf{V}_{i}'$, $\mathbf{V}_{i+1}'$ being the
@@ -476,6 +478,17 @@ additional constraints are added in the main optimization process:
 \item Joint angle, velocity and torque constraints.
 \end{itemize}
 
+\begin{figure}[t]
+\begin{center}
+  \begin{tabular}{c@{\quad\quad}c}
+  \includegraphics[height=0.8 \linewidth]{figure/HRP4C-stand}&
+  \includegraphics[height=0.8 \linewidth]{figure/hrp4c-joints.pdf}
+\end{tabular}
+  \caption{Humanoid robot HRP-4C and its structure.} 
+  \label{fig:hrp4c-joints}
+\end{center}
+\end{figure}
+
 We here need robot configuration $\mathbf{q}$ from the marker
 positions to calculate the following constraints with dynamic property
 like mass and moment of inertia of each link.
@@ -483,6 +496,9 @@ Since the output marker positions from the pre-processing are close
 enough to the feasible robot configuration, we can benefit from the
 joint angle fitting using damped least square method introduced in
 \cite{Nakaoka12Humanoids}. 
+Figure~\ref{fig:hrp4c-joints} shows the kinematic structure of the
+humanoid HRP-4C \cite{Kaneko09Humanoids} the proposed retargeting is
+applied to. 
 Once the robot configurations are obtained, the following 
 constraints are evaluated on the numerical basis, by using
 joint velocity and acceleration computed with finite difference.
@@ -574,7 +590,7 @@ The application layer contains dedicated mathematical functions which
 can be embedded into different optimization problems. An overview of
 the framework architecture is shown in Fig.~(\ref{fig:roboptim}).
 
-\begin{figure}[t]
+\begin{figure}[b]
   \includegraphics[width=\linewidth]{figure/roboptim-architecture.pdf}
   \caption{RobOptim  architecture.}
   \label{fig:roboptim}
@@ -629,21 +645,43 @@ website: http://www.roboptim.net/
 The proposed algorithm has been applied to a whole body motion
 taken from CMU motion capture database \cite{CMUMotionDB}.
 % recorded from a human subject.
-We have integrated a RobOptim plugin for nonlinear optimization tools
+We have integrated a RobOptim plug-in for nonlinear optimization tools
 of NAG  optimization library \cite{NAG}
 % The Ipopt plug-in for RobOptim allowed us 
 to solve the problem while
 using sparse matrices computation. This is particularly useful for
-trajectroy optimization where large matrices are involved as
+trajectory optimization where large matrices are involved as
 some constraints are only considering one frame and thus associated
 Jacobian are containing a large proportion of null values.
+\begin{figure}[b]
+  \begin{center}
+    \includegraphics[width=0.7 \linewidth]{figure/retargeting-preprocessing.jpg}
+    \end{center}
+  \caption{The marker set before (purple markers) and after (white markers) the initial
+    preprocessing phase.}
+  \label{fig:preprocessing}
+\end{figure}
+
+\begin{figure}[b]
+  \begin{center}
+    \begin{tabular}{cc}
+    \includegraphics[width=0.35 \linewidth]{figure/before}&
+    \includegraphics[width=0.35
+    \linewidth]{figure/after}\vspace*{-1mm}\\
+    (a) & (b)
+    \end{tabular}
+    \caption{Optimized posture for HRP-4C before (a) and after (b)
+      the optimization.}
+    \label{fig:choreonoid-result}
+  \end{center}
+\end{figure}
 
 In order to validate its basic capacity of dynamic constraint
 consideration, we have applied the proposed method to a sequence
 of several human postures to be converted into stable humanoid
 configurations. 
 In this validation we use the Laplacian Deformation Energy
-in Eq.~(\ref{eq:laplace-energy}) only with $\alpha=0$ in
+$E_L$ in Eq.~(\ref{eq:laplace-energy}) only with $\alpha=0$ in
 Eq.~(\ref{eq:cost-function}), 
 with dynamic balance constraint with ZMP of Eq.~(\ref{eq:zmp}).
 The support polygon ${\cal S}(x_{rfoot}, y_{lfoot})$ for the stability
@@ -654,37 +692,23 @@ Fig.~\ref{fig:preprocessing} (pre-processing) and
 Fig.~\ref{fig:choreonoid-result} (final result).
 In Fig.~\ref{fig:preprocessing} we can observe that the markers
 positions are displaces to fit to the robot whose size is much smaller
-than the ditigal character.
+than the digital character.
 In the optimized posture in
 Fig.~\ref{fig:choreonoid-result}(b), the configuration is modified so
 that robotic constraints such as joint limits or link length can be satisfied.
 We also verified the dynamic balance during the motion sequence by
 computing the resultant ZMP as shown in Fig.~\ref{fig:zmp}.
-As can be seen, the ZMP stays inside the support polygon of the area
-$\pm 7.5$ cm for each x and y axis.
+As can be seen, the ZMP stays inside the support polygon of
+the area $\pm 7.5$ cm along each x and y axis as specified in the
+constraints. 
+Although the profile in Fig.~\ref{fig:zmp} is a bit shaky
+as we have not yet integrated Acceleration Energy 
+$E_A$ in Eq.~(\ref{eq:acc-energy}), the balance constraint itself is
+satisfied. 
+We therefore believe that more smooth trajectory will be obtained as
+the optimized trajectory by taking account Acceleration Energy.
 
-\begin{figure}[t]
-  \begin{center}
-    \includegraphics[width=0.8 \linewidth]{figure/retargeting-preprocessing.jpg}
-    \end{center}
-  \caption{The marker set before (purple markers) and after (white markers) the initial
-    preprocessing phase.}
-  \label{fig:preprocessing}
-\end{figure}
 
-\begin{figure}[t]
-  \begin{center}
-    \begin{tabular}{cc}
-    \includegraphics[width=0.4 \linewidth]{figure/before}&
-    \includegraphics[width=0.4
-    \linewidth]{figure/after}\vspace*{-1mm}\\
-    (a) & (b)
-    \end{tabular}
-    \caption{Ooptimized posture for HRP-4C before (a) and after (b)
-      the optimization.}
-    \label{fig:choreonoid-result}
-  \end{center}
-\end{figure}
 
 
 \begin{figure}[t]
@@ -708,6 +732,8 @@ $\pm 7.5$ cm for each x and y axis.
 %the Choreonoid\footnote{http://www.choreonoid.org/en/} robotics
 %environment.
 
+\addtolength{\textheight}{-6cm}
+
 \section{Conclusion}
 \label{sec:conclusion}
 
@@ -725,21 +751,18 @@ parts as much as possible based on interaction mesh, by satisfying the
 robotic dynamic constraints throughout the motion.
 The optimization output motion can be converted to the robot trajectory
 in a straightforward manner by the last step.
-The effectiveness of the proposed method has been validated by
-simulating the generated robot motion.
+The fundamental effectiveness of the proposed method has been validated
+% by simulating the generated robot motion.
+by converting a sequence of human postures into humanoid
+configurations by minimizing the cost of spatial relationship with
+robotic constraints.
 
 Future work includes extensions to take into account different cost
 functions such as human-likeliness, or additional constraints such
-as collision avoidance or other .
+as collision avoidance or others depending on the task of the humanoid.
 Application to walking motion retargeting will also be addressed in
 future work.
 
-% \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
-                                  % on the last page of the document manually. It shortens
-                                  % the textheight of the last page by a suitable amount.
-                                  % This command does not take effect until the next page
-                                  % so it should come on the page before the last. Make
-                                  % sure that you do not shorten the textheight too much.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -760,6 +783,13 @@ This research was partially supported by the Japan Society for the
 Promotion of Science (JSPS; Grant-in-Aid for JSPS Fellows P12803).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\addtolength{\textheight}{-7cm}
+ % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
 
 
 \bibliographystyle{IEEEtran}
