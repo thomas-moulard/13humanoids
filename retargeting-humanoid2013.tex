@@ -25,6 +25,17 @@
 %\usepackage{amsmath} % assumes amsmath package installed
 %\usepackage{amssymb}  % assumes amsmath package installed
 
+\def\topfraction{1}         %changed. original:.7
+\setcounter{bottomnumber}{6} %changed. original:1
+\def\bottomfraction{1}      %changed. original:.3
+\setcounter{totalnumber}{8}  %changed. original:2
+\def\textfraction{0}        %changed. original:.3
+\def\floatpagefraction{1}   %changed. original:.5
+\setcounter{dbltopnumber}{8}
+\def\dbltopfraction{1}      %changed. original:.7
+\def\dblbottomfraction{1}   %changed. original:.7
+\def\dblfloatpagefraction{1}%changed. original:.5
+
 \title{\LARGE \bf
 Optimization-based Motion Retargeting Integrating Spatial and Dynamic Constraints
 }
@@ -71,6 +82,7 @@ humanoid robot.
 \end{abstract}
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \label{sec:intro}
@@ -96,6 +108,8 @@ quantitatively by estimating motor torque \cite{Miura13ICRA}, taking
 an example of a supportive wear called ``Smart Suit Lite''
 \cite{Tanaka11JRM} designed to reduce load
 at the lower back with embedded elastic bands.
+
+
 
 The important issue in those applications is how to generate natural
 motions of a humanoid robot.  There have been a number of studies on
@@ -133,13 +147,7 @@ upper-body motion from markerless motion input
 % \item Motion optimization Miossec, Suleiman, Lengagne
 % \end{itemize}
 
-\begin{figure*}[b]
-  \includegraphics[width=\linewidth]{figure/architecture.pdf}
-  \caption{The two step retargeting process. The final inverse
-    kinematics step is only here to convert the final motion to joints
-    trajectory.}
-  \label{fig:algorithm}
-\end{figure*}
+
 
 
 On the other hand, motion retargeting has been investigated
@@ -160,6 +168,15 @@ does not deal with dynamic constraints such as torque limits.
 In addition, those constraints are treated separately after
 generating retargeted motion to adapt to the humanoid.
 
+\begin{figure*}[t]
+\begin{center}
+  \includegraphics[width=\linewidth]{figure/architecture.pdf}
+  \caption{The two step retargeting process. The final inverse
+    kinematics step is only here to convert the final motion to joints
+    trajectory.}
+  \label{fig:algorithm}
+\end{center}
+\end{figure*}
 
 % Optim
 Another related domain is the optimization technique that is more and
@@ -236,6 +253,17 @@ the paper.
 
 \section{Method Overview}
 \label{sec:overview}
+
+
+\begin{figure}[b]
+\begin{center}
+  \includegraphics[width=0.8 \linewidth]{figure/InteractionMeshImage.png}
+  \caption{Examples of interaction mesh representing the spatial
+    relationship between body parts, applied to a digital character and a
+    humanoid \protect{\cite{Nakaoka12Humanoids}}.} 
+  \label{fig:interaction-mesh}
+\end{center}
+\end{figure}
 
 The proposed retargeting framework consists of three steps as shown in
 Fig.~\ref{fig:algorithm} and  
@@ -338,7 +366,9 @@ Considering these two notions, it is possible to introduce the
 serve as a cost function in this problem:
 
 \begin{equation}
-E_L(\mathbf{V'}_i) = \sum_j || L(\mathbf{p}^i_j) - L(\mathbf{p}^i_j{}') ||^2
+E_L(\mathbf{V'}_i) = \sum_j || L(\mathbf{p}^i_j) -
+L(\mathbf{p}^i_j{}') ||^2
+\label{eq:laplace-energy}
 \end{equation}
 
 The Laplacian Deformation Energy is the square of the norm of the
@@ -370,6 +400,7 @@ The final cost function $C$ is by consequence expressed by:
     C(\mathbf{V}_{i-1}', \mathbf{V}_{i}', \mathbf{V}_{i+1}') =
     E_L(\mathbf{V}_{i}') + \alpha E_A(\mathbf{V}_{i-1}',
     \mathbf{V}_{i}', \mathbf{V}_{i+1}') 
+\label{eq:cost-function}
 \end{equation}
 where $\alpha$ is the weighting coefficient.
 Additionally, a link length constraint is defined. This constraint
@@ -415,6 +446,7 @@ subsection.
 % Therefore, this process is not enough to generate a
 % feasible robotics motion. The next section will show how to refine
 % this motion to ensure that physical constraints are respected.
+
 
 
 \subsection{Robotics motion generation}
@@ -542,7 +574,7 @@ The application layer contains dedicated mathematical functions which
 can be embedded into different optimization problems. An overview of
 the framework architecture is shown in Fig.~(\ref{fig:roboptim}).
 
-\begin{figure}[b]
+\begin{figure}[t]
   \includegraphics[width=\linewidth]{figure/roboptim-architecture.pdf}
   \caption{RobOptim  architecture.}
   \label{fig:roboptim}
@@ -610,12 +642,28 @@ In order to validate its basic capacity of dynamic constraint
 consideration, we have applied the proposed method to a sequence
 of several human postures to be converted into stable humanoid
 configurations. 
+In this validation we use the Laplacian Deformation Energy
+in Eq.~(\ref{eq:laplace-energy}) only with $\alpha=0$ in
+Eq.~(\ref{eq:cost-function}), 
+with dynamic balance constraint with ZMP of Eq.~(\ref{eq:zmp}).
+The support polygon ${\cal S}(x_{rfoot}, y_{lfoot})$ for the stability
+is the square of 15 cm around the center of feet.
+
 The result after the optimization process is illustrated by
 Fig.~\ref{fig:preprocessing} (pre-processing) and
 Fig.~\ref{fig:choreonoid-result} (final result).
+In Fig.~\ref{fig:preprocessing} we can observe that the markers
+positions are displaces to fit to the robot whose size is much smaller
+than the ditigal character.
+In the optimized posture in
+Fig.~\ref{fig:choreonoid-result}(b), the configuration is modified so
+that robotic constraints such as joint limits or link length can be satisfied.
+We also verified the dynamic balance during the motion sequence by
+computing the resultant ZMP as shown in Fig.~\ref{fig:zmp}.
+As can be seen, the ZMP stays inside the support polygon of the area
+$\pm 7.5$ cm for each x and y axis.
 
-
-\begin{figure}[htbp!]
+\begin{figure}[t]
   \begin{center}
     \includegraphics[width=0.8 \linewidth]{figure/retargeting-preprocessing.jpg}
     \end{center}
@@ -624,12 +672,12 @@ Fig.~\ref{fig:choreonoid-result} (final result).
   \label{fig:preprocessing}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
   \begin{center}
     \begin{tabular}{cc}
-    \includegraphics[width=0.4 \linewidth]{figure/before.png}&
+    \includegraphics[width=0.4 \linewidth]{figure/before}&
     \includegraphics[width=0.4
-    \linewidth]{figure/after.png}\vspace*{-1mm}\\
+    \linewidth]{figure/after}\vspace*{-1mm}\\
     (a) & (b)
     \end{tabular}
     \caption{Ooptimized posture for HRP-4C before (a) and after (b)
@@ -638,6 +686,14 @@ Fig.~\ref{fig:choreonoid-result} (final result).
   \end{center}
 \end{figure}
 
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=0.95 \linewidth]{figure/zmp-130719}
+    \end{center}
+  \caption{ZMP values during the motion sequence of 10 frames.}
+  \label{fig:zmp}
+\end{figure}
 
 %FIXME: list tested motion, draw graphs, make comparison.
 %
