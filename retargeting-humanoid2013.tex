@@ -64,8 +64,10 @@ are being satisfied.  We have integrated the interaction mesh and the
 dynamic constraints in a unified optimization framework, which is
 advantageous for generation of natural motions by a humanoid robot
 compared to previous work that performs those processes
-separately. The retargeted motions are being validated through dynamic
-simulations of a humanoid robot.
+separately. 
+We have validated the basic effectiveness of the proposed method
+with a sequence of postures converted from captured human  data to a
+humanoid robot.
 \end{abstract}
 
 
@@ -118,15 +120,6 @@ upper-body motion from markerless motion input
 \cite{Dariush08IROS,Do08humanoids}.
 
 
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.8 \linewidth]{figure/retargeting-result1.jpg}
-    \caption{HRP-4C optimized motion using RobOptim and the Choreonoid
-      robotics frameworks (yellow is the final result, white the
-      original marker set).}
-    \label{fig:choreonoid-result}
-  \end{center}
-\end{figure}
 
 % Human motion based optimization
 % Categoraized related work
@@ -309,14 +302,6 @@ their computational aspects.
 
 \subsection{Motion retargeting}
 
-\begin{figure}[htbp!]
-  \begin{center}
-    \includegraphics[width=0.8 \linewidth]{figure/retargeting-preprocessing.jpg}
-    \end{center}
-  \caption{The marker set before (a) and after (b) the initial
-    retargeting phase.}
-  \label{fig:retargeting}
-\end{figure}
 
 The retargeting algorithm employed in the first two steps in the
 framework of Fig.~\ref{fig:algorithm} relies on 
@@ -595,7 +580,7 @@ website: http://www.roboptim.net/
 
 
 
-\section{Results and simulation}
+\section{Retargeting Results}
 \label{sec:results}
 
 % alpha: 10^-6
@@ -610,19 +595,48 @@ website: http://www.roboptim.net/
 
 
 The proposed algorithm has been applied to a whole body motion
-recorded from a human subject using a motion capture setup.
-
-
-The Ipopt plug-in for RobOptim allowed us to solve the problem while
-using sparse matrices computation. This proved particularly useful for
-trajectroy optimization where large matrices are involved. However
+taken from CMU motion capture database \cite{CMUMotionDB}.
+% recorded from a human subject.
+We have integrated a RobOptim plugin for nonlinear optimization tools
+of NAG  optimization library \cite{NAG}
+% The Ipopt plug-in for RobOptim allowed us 
+to solve the problem while
+using sparse matrices computation. This is particularly useful for
+trajectroy optimization where large matrices are involved as
 some constraints are only considering one frame and thus associated
-jacobian are containing a large proportion of null values.
+Jacobian are containing a large proportion of null values.
 
-
+In order to validate its basic capacity of dynamic constraint
+consideration, we have applied the proposed method to a sequence
+of several human postures to be converted into stable humanoid
+configurations. 
 The result after the optimization process is illustrated by
-Fig.~\ref{fig:retargeting} (post-processing) and
+Fig.~\ref{fig:preprocessing} (pre-processing) and
 Fig.~\ref{fig:choreonoid-result} (final result).
+
+
+\begin{figure}[htbp!]
+  \begin{center}
+    \includegraphics[width=0.8 \linewidth]{figure/retargeting-preprocessing.jpg}
+    \end{center}
+  \caption{The marker set before (purple markers) and after (white markers) the initial
+    preprocessing phase.}
+  \label{fig:preprocessing}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+    \includegraphics[width=0.4 \linewidth]{figure/before.png}&
+    \includegraphics[width=0.4
+    \linewidth]{figure/after.png}\vspace*{-1mm}\\
+    (a) & (b)
+    \end{tabular}
+    \caption{Ooptimized posture for HRP-4C before (a) and after (b)
+      the optimization.}
+    \label{fig:choreonoid-result}
+  \end{center}
+\end{figure}
 
 
 %FIXME: list tested motion, draw graphs, make comparison.
